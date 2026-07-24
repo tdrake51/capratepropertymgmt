@@ -40,7 +40,7 @@ To add more:
    ```
 
 Units with an empty `photos: []` show a labeled grey placeholder — the site still
-works, it just says the photo isn't up yet. Six units are still waiting on photos:
+works, it just says the photo isn't up yet. Eight units are still waiting on photos:
 4911 Nelson, 724 N Edgewood B, 2603 Boone, 2905 Garrison C, 2924 Garrison B,
 2933 Allendale T, 2945 Allendale B, 3512 Clifton 3.
 

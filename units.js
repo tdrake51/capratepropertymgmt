@@ -118,7 +118,7 @@ export const UNITS = [
     photos: ["1922-griffis-1.png","1922-griffis-2.png","1922-griffis-3.png","1922-griffis-4.png","1922-griffis-5.png","1922-griffis-6.png","1922-griffis-7.png","1922-griffis-8.png","1922-griffis-9.png","1922-griffis-10.png"]
   },
   {
-    id: "511-e-43rd-3a",
+    id: "511-e-43rd",
     address: "511 E 43rd St", unit: "",
     hood: "Waverly · Pen Lucy", zip: "21212",
     beds: 2, baths: 1, type: "Multifamily apartment",
