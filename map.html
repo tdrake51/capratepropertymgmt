@@ -68,7 +68,7 @@ function render(list){
     const cls = u.accessible ? 'acc' : (u.beds === null ? 'inq' : '');
     const icon = L.divIcon({
       className: '', iconSize: [34,34], iconAnchor: [17,32], popupAnchor: [0,-30],
-      html: '<div class="cap-pin ' + cls + '"><span>' + label(u) + '</span></div>'
+      html: '<div class="cap-pin ' + cls + '"><span>' + esc(label(u)) + '</span></div>'
     });
     const specs = u.beds === null ? 'Inquire about bed / bath'
       : u.beds + ' BR · ' + u.baths + ' BA · ' + u.type;

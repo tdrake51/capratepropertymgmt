@@ -136,7 +136,7 @@ export const UNITS = [
     accessible: false, available: "Available now", rent: null,
     nearby: ["Near Loyola University Maryland", "Near Notre Dame of Maryland", "Near Johns Hopkins", "Close to Clifton Park & Herring Run Park"],
     lat: 39.3430, lng: -76.6070,
-    photos: ["511-e-43rd-3a-1.png","511-e-43rd-3a-2.png","511-e-43rd-3a-3.png","511-e-43rd-3a-4.png","511-e-43rd-3a-5.png","511-e-43rd-3a-6.png","511-e-43rd-3a-7.png"]
+    photos: ["511-e-43rd-1.png","511-e-43rd-2.png","511-e-43rd-3.png","511-e-43rd-4.png","511-e-43rd-5.png","511-e-43rd-6.png","511-e-43rd-7.png"]
   },
   {
     id: "2513-liberty-heights-bsmt",
