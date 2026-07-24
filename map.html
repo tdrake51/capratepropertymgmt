@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Caprate — Availability Map</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H" crossorigin="anonymous">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;height:100%;font-family:'Inter',system-ui,sans-serif;background:#FBFAF6;}
+  #map{position:absolute;inset:0;}
+  .leaflet-container{background:#EDEFE9;font-family:'Inter',system-ui,sans-serif;}
+  .cap-pin{display:grid;place-items:center;width:34px;height:34px;border-radius:50% 50% 50% 4px;
+    transform:rotate(-45deg);background:#1F6B4A;border:2.5px solid #FBFAF6;
+    box-shadow:0 4px 12px -2px rgba(18,70,58,.55);cursor:pointer;transition:transform .16s,background .16s;}
+  .cap-pin span{transform:rotate(45deg);color:#fff;font-weight:700;font-size:12.5px;line-height:1;letter-spacing:-.02em;}
+  .cap-pin.inq{background:#C4924B;}
+  .cap-pin.acc{background:#12463A;}
+  .cap-pin:hover{transform:rotate(-45deg) scale(1.14);}
+  .cap-pin.on{background:#12463A;transform:rotate(-45deg) scale(1.2);}
+  .leaflet-popup-content-wrapper{border-radius:12px;box-shadow:0 20px 44px -22px rgba(18,70,58,.5);padding:2px;}
+  .leaflet-popup-content{margin:14px 16px;width:224px !important;}
+  .pp-hood{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#1F6B4A;}
+  .pp-addr{font-family:'Inter';font-size:16px;font-weight:700;color:#12463A;margin-top:5px;line-height:1.25;}
+  .pp-meta{font-size:13px;color:#5A6B60;margin-top:5px;}
+  .pp-btn{display:block;margin-top:12px;text-align:center;background:#12463A;color:#fff;
+    padding:9px 12px;border-radius:100px;font-size:13px;font-weight:600;text-decoration:none;cursor:pointer;border:none;width:100%;}
+  .pp-btn:hover{background:#1F6B4A;}
+  .legend{position:absolute;left:12px;bottom:22px;z-index:600;background:rgba(251,250,246,.95);
+    border:1px solid #DCE5DF;border-radius:11px;padding:11px 14px;display:grid;gap:7px;
+    box-shadow:0 10px 26px -18px rgba(18,70,58,.5);}
+  .lg{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:500;color:#1A2621;}
+  .sw{width:11px;height:11px;border-radius:50%;flex:none;}
+  .count{position:absolute;right:12px;top:12px;z-index:600;background:#12463A;color:#FBFAF6;
+    padding:8px 15px;border-radius:100px;font-size:12.5px;font-weight:600;
+    box-shadow:0 10px 26px -18px rgba(18,70,58,.6);}
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div class="count" id="count">—</div>
+<div class="legend">
+  <div class="lg"><span class="sw" style="background:#1F6B4A"></span> Bed / bath listed</div>
+  <div class="lg"><span class="sw" style="background:#C4924B"></span> Inquire for details</div>
+  <div class="lg"><span class="sw" style="background:#12463A"></span> Accessible features</div>
+</div>
+<script type="module">
+import { UNITS } from './units.js';
+
+const map = L.map('map', { scrollWheelZoom: false, zoomControl: true })
+  .setView([39.3245, -76.6420], 12);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap contributors', maxZoom: 18
+}).addTo(map);
+map.on('click', () => map.scrollWheelZoom.enable());
+
+const layer = L.layerGroup().addTo(map);
+const markers = {};
+
+function label(u){ return u.beds === null ? '?' : u.beds + 'B'; }
+
+function render(list){
+  layer.clearLayers();
+  for (const k in markers) delete markers[k];
+  list.forEach(u => {
+    const cls = u.accessible ? 'acc' : (u.beds === null ? 'inq' : '');
+    const icon = L.divIcon({
+      className: '', iconSize: [34,34], iconAnchor: [17,32], popupAnchor: [0,-30],
+      html: '<div class="cap-pin ' + cls + '"><span>' + label(u) + '</span></div>'
+    });
+    const specs = u.beds === null ? 'Inquire about bed / bath'
+      : u.beds + ' BR · ' + u.baths + ' BA · ' + u.type;
+    const m = L.marker([u.lat, u.lng], { icon, title: u.address })
+      .bindPopup(
+        '<div class="pp-hood">' + u.hood + ' · ' + u.zip + '</div>' +
+        '<div class="pp-addr">' + u.address + (u.unit ? ' <span style="color:#5A6B60;font-weight:600">— ' + u.unit + '</span>' : '') + '</div>' +
+        '<div class="pp-meta">' + specs + '</div>' +
+        '<button class="pp-btn" data-open="' + u.id + '">View unit &amp; request showing</button>'
+      );
+    m.addTo(layer);
+    markers[u.id] = m;
+  });
+  document.getElementById('count').textContent =
+    list.length + (list.length === 1 ? ' unit shown' : ' units shown');
+}
+
+render(UNITS);
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-open]');
+  if (b) parent.postMessage({ caprate: 'openUnit', id: b.dataset.open }, '*');
+});
+
+addEventListener('message', e => {
+  const d = e.data || {};
+  if (d.caprate === 'filter' && Array.isArray(d.ids)) {
+    render(UNITS.filter(u => d.ids.includes(u.id)));
+  }
+  if (d.caprate === 'focus' && markers[d.id]) {
+    map.flyTo([markers[d.id].getLatLng().lat, markers[d.id].getLatLng().lng], 15, { duration: .7 });
+    markers[d.id].openPopup();
+  }
+});
+</script>
+</body>
+</html>
