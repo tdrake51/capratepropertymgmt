@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Available Units - Caprate Property Management</title>
+<meta name="description" content="Current voucher-friendly rental availability from Caprate Property Management across Baltimore City. Filter by bedroom size, call, or schedule a showing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--pine:#12463A;--green:#1F6B4A;--green-soft:#E3F1EA;--paper:#FBFAF6;--ink:#1A2621;--muted:#5A6B60;--brass:#C4924B;--brass-dark:#A9782F;--line:#DCE5DF;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:"Inter",system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:"Fraunces",Georgia,serif;font-weight:600;letter-spacing:-.01em;line-height:1.1;}
+  a{color:var(--green);}
+  .wrap{margin:0 auto;max-width:960px;padding:0 20px;}
+  .top{background:var(--pine);color:var(--paper);padding:26px 0 22px;}
+  .brandline{align-items:center;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;}
+  .brand{font-family:"Fraunces",Georgia,serif;font-size:23px;font-weight:600;}
+  .brand span{display:block;font-family:"Inter",system-ui,sans-serif;font-size:9px;font-weight:700;letter-spacing:.32em;margin-top:2px;opacity:.8;}
+  .voucher{background:rgb(227 241 234 / 14%);border:1px solid rgb(227 241 234 / 30%);border-radius:100px;font-size:12.5px;font-weight:700;letter-spacing:.04em;padding:7px 16px;white-space:nowrap;}
+  .voucher b{color:#F0D9A8;}
+  .controls{backdrop-filter:blur(10px);background:rgb(251 250 246 / 94%);border-bottom:1px solid var(--line);padding:14px 0;position:sticky;top:0;z-index:20;}
+  .controls .wrap{align-items:center;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;}
+  .count{color:var(--muted);font-size:14px;font-weight:600;}
+  .count b{color:var(--pine);font-size:15px;}
+  .filters{display:flex;flex-wrap:wrap;gap:6px;}
+  .fbtn{background:#fff;border:1.5px solid var(--line);border-radius:100px;color:var(--ink);cursor:pointer;font:600 13.5px inherit;padding:8px 15px;transition:all .15s;}
+  .fbtn:hover,.fbtn:focus-visible{border-color:var(--green);}
+  .fbtn.on{background:var(--pine);border-color:var(--pine);color:var(--paper);}
+  .seclabel{align-items:center;display:flex;gap:12px;margin:30px 0 4px;}
+  .seclabel h2{color:var(--pine);font-size:18px;}
+  .pill{border-radius:100px;font-size:11px;font-weight:700;letter-spacing:.06em;padding:4px 11px;text-transform:uppercase;}
+  .pill.now{background:var(--green-soft);color:var(--green);}
+  .pill.soon{background:#FBF0DD;color:var(--brass-dark);}
+  .rule{background:var(--line);flex:1;height:1px;}
+  .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));margin-top:16px;}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;display:flex;flex-direction:column;gap:9px;padding:18px 18px 14px;transition:box-shadow .15s,transform .15s;}
+  .card:hover{box-shadow:0 6px 22px rgb(18 70 58 / 9%);transform:translateY(-1px);}
+  .beds{align-self:flex-start;background:var(--pine);border-radius:100px;color:var(--paper);font-size:13px;font-weight:700;padding:5px 12px;}
+  .soon .beds{background:var(--brass-dark);}
+  .addr{color:var(--pine);font-family:"Fraunces",Georgia,serif;font-size:19px;font-weight:600;line-height:1.15;}
+  .unit{color:var(--muted);font-family:"Inter",system-ui,sans-serif;font-size:14px;font-weight:600;}
+  .hood{color:var(--muted);font-size:13.5px;}
+  .hood b{color:var(--ink);font-weight:600;}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+  .tag{background:var(--green-soft);border-radius:6px;color:var(--green);font-size:11px;font-weight:600;padding:3px 9px;}
+  .tag.acc{background:#FBF0DD;color:var(--brass-dark);}
+  .actions{border-top:1px solid var(--line);display:flex;gap:8px;margin-top:auto;padding-top:10px;}
+  .actions a{border-radius:9px;flex:1;font-size:13px;font-weight:600;padding:8px;text-align:center;text-decoration:none;}
+  .a-call{background:var(--pine);color:var(--paper);}
+  .a-map{background:var(--green-soft);color:var(--green);}
+  .empty{color:var(--muted);display:none;font-size:15px;padding:50px 20px;text-align:center;}
+  .cta{background:var(--pine);color:var(--paper);margin-top:44px;padding:40px 0;}
+  .cta .wrap{text-align:center;}
+  .cta h2{color:var(--paper);font-size:26px;}
+  .cta p{color:rgb(251 250 246 / 82%);font-size:15px;margin:10px auto 22px;max-width:46ch;}
+  .btns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;}
+  .btn{align-items:center;border-radius:100px;display:inline-flex;font-size:15px;font-weight:600;gap:8px;padding:13px 24px;text-decoration:none;}
+  .btn-brass{background:var(--brass);color:#2A1E0A;}
+  .btn-ghost{border:1.5px solid rgb(251 250 246 / 40%);color:var(--paper);}
+  .eho{color:rgb(251 250 246 / 60%);font-size:12px;margin-top:22px;}
+  .updated{color:rgb(251 250 246 / 55%);font-size:12px;margin-top:4px;}
+  @media (max-width:520px){.grid{grid-template-columns:1fr;}.controls .wrap{align-items:flex-start;flex-direction:column;}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brandline">
+      <div class="brand">Caprate Property Management<span>BALTIMORE CITY HOUSING SOLUTIONS</span></div>
+      <div class="voucher"><b>&#9733;</b> VOUCHERS WELCOME - HCV / SECTION 8 - HUD-VASH</div>
+    </div>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="wrap">
+    <div class="count"><b id="shown">17</b> units shown</div>
+    <div class="filters" id="filters" aria-label="Filter available units">
+      <button class="fbtn on" type="button" data-f="all" aria-pressed="true">All</button>
+      <button class="fbtn" type="button" data-f="1" aria-pressed="false">1 BR</button>
+      <button class="fbtn" type="button" data-f="2" aria-pressed="false">2 BR</button>
+      <button class="fbtn" type="button" data-f="3" aria-pressed="false">3 BR</button>
+      <button class="fbtn" type="button" data-f="now" aria-pressed="false">Available Now</button>
+      <button class="fbtn" type="button" data-f="soon" aria-pressed="false">Coming Soon</button>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+  <div class="seclabel" data-sec="now"><h2>Available Now</h2><span class="pill now" id="nowcount">11 units</span><span class="rule"></span></div>
+  <div class="grid" id="grid-now"></div>
+  <div class="seclabel" data-sec="soon"><h2>Coming Soon</h2><span class="pill soon" id="sooncount">6 units - in renovation</span><span class="rule"></span></div>
+  <div class="grid" id="grid-soon"></div>
+  <div class="empty" id="empty">No units match that filter. Try "All".</div>
+</main>
+
+<section class="cta">
+  <div class="wrap">
+    <h2>Refer a client or schedule a showing</h2>
+    <p>Tell us the voucher size and the area your client is looking in, and we'll point you to the best matches - current or coming soon.</p>
+    <div class="btns">
+      <a href="tel:4104153142" class="btn btn-brass">Call or text (410) 415-3142</a>
+      <a href="mailto:leasing@capratepropertymgmt.com" class="btn btn-ghost">Email us</a>
+    </div>
+    <div class="eho">Equal Housing Opportunity - We do not discriminate based on source of income or any protected class.</div>
+    <div class="updated">Availability updated July 2026 - Terry Drake, Caprate Property Management</div>
+  </div>
+</section>
+
+<script>
+const UNITS = [
+  {addr:"4911 Nelson Ave",unit:"",beds:2,baths:1,hood:"Arlington",zip:"21215",near:"Near Sinai Hospital",when:"now"},
+  {addr:"4908 Nelson Ave",unit:"",beds:2,baths:1,hood:"Arlington",zip:"21215",near:"Near Sinai Hospital",when:"now"},
+  {addr:"629 Dumbarton Ave",unit:"D",beds:1,baths:1,hood:"Original Northwood",zip:"21218",near:"",when:"now"},
+  {addr:"1700 Braddish Ave",unit:"A",beds:1,baths:1,hood:"Rosemont",zip:"21216",near:"Near Mondawmin Metro",when:"now"},
+  {addr:"2513 Liberty Heights Ave",unit:"Bsmt",beds:1,baths:1,hood:"Forest Park",zip:"21215",near:"",when:"now"},
+  {addr:"3913 Dolfield Ave",unit:"F",beds:2,baths:1,hood:"Central Park Heights",zip:"21215",near:"",when:"now"},
+  {addr:"2905 Garrison Blvd",unit:"B",beds:2,baths:1,hood:"Garwyn Oaks",zip:"21216",near:"Near Mondawmin Metro",when:"now"},
+  {addr:"2912 Garrison Blvd",unit:"2T",beds:2,baths:1,hood:"Garwyn Oaks",zip:"21216",near:"Near Mondawmin Metro",when:"now"},
+  {addr:"2924 Garrison Blvd",unit:"A",beds:2,baths:1,hood:"Garwyn Oaks",zip:"21216",near:"Near Mondawmin Metro",when:"now"},
+  {addr:"2926 Garrison Blvd",unit:"B",beds:2,baths:1,hood:"Garwyn Oaks",zip:"21216",near:"Near Mondawmin Metro",when:"now"},
+  {addr:"2928 Garrison Blvd",unit:"B",beds:2,baths:1,hood:"Garwyn Oaks",zip:"21216",near:"Near Mondawmin Metro",when:"now"},
+  {addr:"2126 Koko Ln",unit:"",beds:3,baths:1,hood:"Panway-Braddish",zip:"21216",near:"Near Mondawmin Metro",when:"soon"},
+  {addr:"724 N Edgewood St",unit:"B",beds:1,baths:1,hood:"Edmondson",zip:"21229",near:"",when:"soon"},
+  {addr:"3512 Clifton Ave",unit:"3",beds:2,baths:1,hood:"Walbrook",zip:"21216",near:"Near Mondawmin Metro",when:"soon"},
+  {addr:"3514 Clifton Ave",unit:"1",beds:2,baths:1,hood:"Walbrook",zip:"21216",near:"Near Mondawmin Metro",when:"soon"},
+  {addr:"2927 Allendale Rd",unit:"A",beds:2,baths:1,hood:"Garwyn Oaks",zip:"21216",near:"Near Mondawmin Metro",when:"soon"},
+  {addr:"2943 Allendale Rd",unit:"B",beds:2,baths:1,hood:"Garwyn Oaks",zip:"21216",near:"Near Mondawmin Metro",when:"soon"}
+];
+const PHONE = "4104153142";
+function card(unit) {
+  const unitLabel = unit.unit ? " - " + unit.unit : "";
+  const mapQuery = encodeURIComponent(unit.addr + " Baltimore MD " + unit.zip);
+  const tags = unit.near ? '<div class="tags"><span class="tag">' + unit.near + "</span></div>" : "";
+  return '<article class="card ' + unit.when + '" data-beds="' + unit.beds + '" data-when="' + unit.when + '">' +
+    '<span class="beds">' + unit.beds + " BR / " + unit.baths + " BA</span>" +
+    '<div class="addr">' + unit.addr + '<span class="unit">' + unitLabel + "</span></div>" +
+    '<div class="hood"><b>' + unit.hood + "</b> - " + unit.zip + "</div>" + tags +
+    '<div class="actions"><a class="a-call" href="tel:' + PHONE + '">Call</a>' +
+    '<a class="a-map" href="https://maps.google.com/?q=' + mapQuery + '" target="_blank" rel="noopener">Map</a></div></article>';
+}
+function render() {
+  const now = UNITS.filter(unit => unit.when === "now");
+  const soon = UNITS.filter(unit => unit.when === "soon");
+  document.getElementById("grid-now").innerHTML = now.map(card).join("");
+  document.getElementById("grid-soon").innerHTML = soon.map(card).join("");
+  document.getElementById("nowcount").textContent = now.length + " units";
+  document.getElementById("sooncount").textContent = soon.length + " units - in renovation";
+  document.getElementById("shown").textContent = UNITS.length;
+}
+function applyFilter() {
+  let shown = 0;
+  document.querySelectorAll(".card").forEach(cardElement => {
+    const { beds, when } = cardElement.dataset;
+    const visible = active === "all" || (["1", "2", "3"].includes(active) && beds === active) || when === active;
+    cardElement.hidden = !visible;
+    if (visible) shown++;
+  });
+  document.querySelectorAll("[data-sec]").forEach(section => {
+    const grid = document.getElementById("grid-" + section.dataset.sec);
+    const anyVisible = Array.from(grid.children).some(cardElement => !cardElement.hidden);
+    section.hidden = !anyVisible;
+    grid.hidden = !anyVisible;
+  });
+  document.getElementById("shown").textContent = shown;
+  document.getElementById("empty").style.display = shown === 0 ? "block" : "none";
+}
+render();
+let active = "all";
+document.getElementById("filters").addEventListener("click", event => {
+  const button = event.target.closest(".fbtn");
+  if (!button) return;
+  active = button.dataset.f;
+  document.querySelectorAll(".fbtn").forEach(filterButton => {
+    const selected = filterButton === button;
+    filterButton.classList.toggle("on", selected);
+    filterButton.setAttribute("aria-pressed", String(selected));
+  });
+  applyFilter();
+});
+</script>
+</body>
+</html>
