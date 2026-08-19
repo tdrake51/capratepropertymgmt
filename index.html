@@ -1,28 +1,146 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Caprate Property Management — Voucher-Friendly Homes in Baltimore</title>
-<meta name="description" content="Renovated, move-in-ready rental homes across Baltimore City. We welcome Housing Choice Vouchers (Section 8) and HUD-VASH, and work directly with case managers.">
+<title>Caprate Property Management - Available Homes</title>
+<meta name="description" content="Voucher-friendly available homes in Baltimore City. Browse available now and coming soon units, then contact Caprate Property Management.">
 <link rel="canonical" href="https://capratepropertymgmt.com/">
-<noscript><meta http-equiv="refresh" content="0; url=Caprate%20Site.dc.html"></noscript>
 <style>
-  html,body{margin:0;height:100%;background:#FBFAF6;font-family:system-ui,-apple-system,sans-serif;}
-  .w{height:100%;display:grid;place-items:center;text-align:center;padding:24px;}
-  h1{font-family:Georgia,serif;font-size:22px;font-weight:600;color:#12463A;margin:18px 0 0;}
-  p{color:#5A6B60;font-size:15px;margin:8px 0 0;}
-  a{color:#1F6B4A;font-weight:600;}
+  :root{--pine:#12463A;--green:#1F6B4A;--green-soft:#E3F1EA;--paper:#FBFAF6;--ink:#1A2621;--muted:#5A6B60;--brass:#C4924B;--line:#DCE5DF;--white:#FFFFFF;}
+  *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--paper);color:var(--ink);line-height:1.55}
+  a{color:var(--green);text-decoration:none} a:hover{text-decoration:underline}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 20px}
+  .nav{position:sticky;top:0;z-index:20;background:rgba(251,250,246,.96);border-bottom:1px solid var(--line)}
+  .nav-inner{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 0}.brand{font-weight:700;color:var(--pine);font-size:20px}
+  .nav-links{display:flex;gap:16px;flex-wrap:wrap;font-size:14px}.btn{display:inline-block;background:var(--pine);color:var(--paper);padding:12px 18px;border-radius:999px;font-weight:700}.btn.secondary{background:var(--white);color:var(--pine);border:1px solid var(--line)}
+  .hero{padding:56px 0 32px}.eyebrow{display:inline-block;background:var(--green-soft);color:var(--green);padding:6px 12px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.hero h1{margin:18px 0 12px;font-size:42px;line-height:1.05;color:var(--pine)}.hero p{max-width:760px;color:var(--muted);font-size:18px;margin:0 0 22px}
+  .hero-actions{display:flex;gap:12px;flex-wrap:wrap}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:28px 0 8px}.stat{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:18px}.stat strong{display:block;font-size:28px;color:var(--pine)}.stat span{color:var(--muted);font-size:14px}
+  .section{padding:26px 0}.section h2{font-size:30px;color:var(--pine);margin:0 0 10px}.section p.lead{color:var(--muted);margin:0 0 20px}
+  .filters{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 20px}.chip{border:1px solid var(--line);background:var(--white);border-radius:999px;padding:10px 14px;font-size:14px;font-weight:700;cursor:pointer}.chip.active{background:var(--pine);color:var(--paper);border-color:var(--pine)}
+  .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.card{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:12px}.kicker{display:flex;justify-content:space-between;gap:10px;align-items:center}.badge{display:inline-block;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:700}.badge.now{background:#E3F1EA;color:#12463A}.badge.soon{background:#F7E8CC;color:#7A5619}.badge.acc{background:#E8F0FF;color:#244C8A}
+  .addr{font-size:22px;font-weight:700;color:var(--pine);line-height:1.15}.meta,.near,.empty{color:var(--muted);font-size:14px}.props{display:flex;gap:8px;flex-wrap:wrap}.pill{background:#F3F0E8;color:#53463B;border-radius:999px;padding:7px 10px;font-size:12px;font-weight:700}
+  .contact{background:var(--pine);color:var(--paper);border-radius:22px;padding:28px;margin:34px 0 26px}.contact h2{margin:0 0 10px;color:var(--paper)}.contact p{margin:0 0 16px;color:rgba(251,250,246,.84)}.contact-links{display:flex;gap:12px;flex-wrap:wrap}.contact .btn{background:var(--brass);color:#2A1E0A}.contact .btn.secondary{background:transparent;color:var(--paper);border-color:rgba(251,250,246,.35)}
+  .footer{padding:34px 0 48px;color:var(--muted);font-size:14px}.footer-top{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:20px;border-top:1px solid var(--line)}
+  @media (max-width: 900px){.stats,.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero h1{font-size:34px}}
+  @media (max-width: 640px){.nav-inner{align-items:flex-start;flex-direction:column}.stats,.grid{grid-template-columns:1fr}.hero{padding-top:36px}.hero h1{font-size:30px}.section h2{font-size:26px}}
 </style>
 </head>
 <body>
-<div class="w">
-  <div>
-    <svg width="52" height="52" viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect width="40" height="40" rx="9" fill="#12463A"></rect><path d="M20 8L31 17V32H24V24H16V32H9V17L20 8Z" fill="#E3F1EA"></path><rect x="18" y="26" width="4" height="6" fill="#C4924B"></rect></svg>
-    <h1>Caprate Property Management</h1>
-    <p>Loading available homes… <a href="Caprate%20Site.dc.html">continue</a></p>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <div class="brand">Caprate Property Management</div>
+    <div class="nav-links">
+      <a href="#available">Available now</a>
+      <a href="#soon">Coming soon</a>
+      <a href="caprate_voucher_guide.html">Voucher guide</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
   </div>
-</div>
-<script>location.replace('Caprate%20Site.dc.html' + location.hash);</script>
+</header>
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Baltimore City rentals</span>
+      <h1>Interactive availability that updates from one file.</h1>
+      <p>Browse current Caprate openings and renovation pipeline in one place. Weekly updates live in <code>units.js</code>, so the site stays simple while the listings stay current.</p>
+      <div class="hero-actions">
+        <a class="btn" href="#available">Browse available homes</a>
+        <a class="btn secondary" href="caprate_voucher_guide.html">Read the voucher guide</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong id="count-now">0</strong><span>Available now</span></div>
+        <div class="stat"><strong id="count-soon">0</strong><span>Coming soon</span></div>
+        <div class="stat"><strong id="count-hoods">0</strong><span>Neighborhoods</span></div>
+        <div class="stat"><strong id="count-updated">-</strong><span>Last updated</span></div>
+      </div>
+    </div>
+  </section>
+  <section class="section" id="available">
+    <div class="wrap">
+      <h2>Available now</h2>
+      <p class="lead">Units ready now for tenant placement.</p>
+      <div class="filters" id="filters"></div>
+      <div class="grid" id="available-grid"></div>
+    </div>
+  </section>
+  <section class="section" id="soon">
+    <div class="wrap">
+      <h2>Coming soon</h2>
+      <p class="lead">Units in renovation or preparing for release.</p>
+      <div class="grid" id="soon-grid"></div>
+    </div>
+  </section>
+  <section class="wrap">
+    <div class="contact">
+      <h2>Need the weekly list by email?</h2>
+      <p>Contact Caprate directly to ask about a unit, request the latest weekly availability list, or share the voucher guide.</p>
+      <div class="contact-links">
+        <a class="btn" href="mailto:leasing@capratepropertymgmt.com?subject=Caprate%20availability%20inquiry">Email leasing@capratepropertymgmt.com</a>
+        <a class="btn secondary" href="tel:4104153142">Call (410) 415-3142</a>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="footer">
+  <div class="wrap footer-top">
+    <div>Caprate Property Management · Baltimore City, Maryland</div>
+    <div><a href="caprate_voucher_guide.html">Voucher guide</a> · <a href="privacy.html">Privacy policy</a> · <span id="footer-updated">Updated</span></div>
+  </div>
+</footer>
+<script src="units.js"></script>
+<script>
+(function(){
+  var units = Array.isArray(window.CAPRATE_UNITS) ? window.CAPRATE_UNITS.slice() : [];
+  var updated = window.CAPRATE_UPDATED || '';
+  var activeHood = 'all';
+  var nowGrid = document.getElementById('available-grid');
+  var soonGrid = document.getElementById('soon-grid');
+  var filters = document.getElementById('filters');
+  function esc(v){ return String(v == null ? '' : v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function labelBeds(n){ return n ? n + ' bed' + (n === 1 ? '' : 's') : 'Bedrooms on request'; }
+  function card(unit){
+    var unitLabel = unit.unit ? ', Unit ' + unit.unit : '';
+    var near = unit.near ? '<div class="near">' + esc(unit.near) + '</div>' : '';
+    var acc = unit.acc ? '<span class="badge acc">Accessible</span>' : '';
+    var whenClass = unit.when === 'now' ? 'now' : 'soon';
+    var whenText = unit.when === 'now' ? 'Available now' : 'Coming soon';
+    return '<article class="card">'
+      + '<div class="kicker"><span class="badge ' + whenClass + '">' + whenText + '</span>' + acc + '</div>'
+      + '<div class="addr">' + esc(unit.addr) + unitLabel + '</div>'
+      + '<div class="meta">' + esc(labelBeds(unit.beds)) + ' · ' + esc(unit.baths || '?') + ' bath · ' + esc(unit.hood) + ' · ' + esc(unit.zip) + '</div>'
+      + '<div class="props">'
+      + '<span class="pill">' + esc(unit.hood) + '</span>'
+      + (unit.beds ? '<span class="pill">' + esc(unit.beds + ' BR') + '</span>' : '')
+      + (unit.unit ? '<span class="pill">Unit ' + esc(unit.unit) + '</span>' : '')
+      + '</div>' + near + '</article>';
+  }
+  function renderFilters(list){
+    var hoods = ['all'];
+    list.forEach(function(u){ if (u.hood && hoods.indexOf(u.hood) === -1) hoods.push(u.hood); });
+    filters.innerHTML = hoods.map(function(h){
+      var active = h === activeHood ? ' active' : '';
+      var label = h === 'all' ? 'All neighborhoods' : h;
+      return '<button class="chip' + active + '" data-hood="' + esc(h) + '">' + esc(label) + '</button>';
+    }).join('');
+    Array.prototype.forEach.call(filters.querySelectorAll('button'), function(btn){
+      btn.addEventListener('click', function(){ activeHood = btn.getAttribute('data-hood'); render(); });
+    });
+  }
+  function render(){
+    var nowUnits = units.filter(function(u){ return u.when === 'now' && (activeHood === 'all' || u.hood === activeHood); });
+    var soonUnits = units.filter(function(u){ return u.when === 'soon' && (activeHood === 'all' || u.hood === activeHood); });
+    nowGrid.innerHTML = nowUnits.length ? nowUnits.map(card).join('') : '<div class="empty">No matching available units in this neighborhood filter.</div>';
+    soonGrid.innerHTML = soonUnits.length ? soonUnits.map(card).join('') : '<div class="empty">No matching coming-soon units in this neighborhood filter.</div>';
+    document.getElementById('count-now').textContent = units.filter(function(u){ return u.when === 'now'; }).length;
+    document.getElementById('count-soon').textContent = units.filter(function(u){ return u.when === 'soon'; }).length;
+    document.getElementById('count-hoods').textContent = Array.from(new Set(units.map(function(u){ return u.hood; }).filter(Boolean))).length;
+    document.getElementById('count-updated').textContent = updated || '-';
+    document.getElementById('footer-updated').textContent = updated ? ('Updated ' + updated) : 'Updated';
+  }
+  renderFilters(units);
+  render();
+})();
+</script>
 </body>
 </html>
