@@ -70,10 +70,11 @@ Also unconfirmed:
 `lat` / `lng` are approximate to the block. For a new address, right-click it in
 Google Maps and copy the lat/lng pair.
 
-## The printable flyer
-`assets/flyer-july-2026.png` is what the "Download the flyer" button serves.
-Replace that file (same name) each week, or drop in a new one and update the
-`href` on the availability page.
+## The interactive flyer
+`available-units.html` is the linked interactive availability flyer. Its `UNITS`
+array is intentionally self-contained so the supplied weekly flyer can retain
+its own 17-unit list, filters, and now/coming-soon statuses. Update that array
+and its "Availability updated" line together when issuing a new flyer.
 
 ## What is not wired up
 - **Forms open the visitor's email app** (pre-filled `mailto:`). Nothing is
@@ -92,6 +93,6 @@ voucher holders". Avoid describing an ideal tenant, family size, or who a unit i
 | `Caprate Site.dc.html` | The site — all five pages |
 | `units.js` | **Edit this weekly.** All unit data |
 | `map.html` | The pin map shown inside the availability page |
-| `assets/flyer-july-2026.png` | Downloadable printable flyer |
+| `available-units.html` | Linked interactive availability flyer |
 | `photos/` | Unit photography — 125 files extracted from your listing sheets |
 | `src/` | The original Word listing sheets, kept for reference |
