@@ -91,8 +91,24 @@
 <script src="units.js"></script>
 <script>
 (function(){
-  var units = Array.isArray(window.CAPRATE_UNITS) ? window.CAPRATE_UNITS.slice() : [];
-  var updated = window.CAPRATE_UPDATED || '';
+  function normalizeUnit(unit){
+    var available = unit.available || '';
+    return {
+      id: unit.id || '',
+      addr: unit.addr || unit.address || '',
+      unit: unit.unit || '',
+      beds: unit.beds,
+      baths: unit.baths,
+      hood: unit.hood || '',
+      zip: unit.zip || '',
+      near: unit.near || (Array.isArray(unit.nearby) ? unit.nearby.join(' · ') : ''),
+      acc: unit.acc === true || unit.accessible === true,
+      when: unit.when || (available === 'Coming soon' ? 'soon' : 'now'),
+      available: available
+    };
+  }
+  var units = Array.isArray(window.CAPRATE_UNITS) ? window.CAPRATE_UNITS.map(normalizeUnit) : [];
+  var updated = window.CAPRATE_UPDATED || (window.CAPRATE_META && window.CAPRATE_META.updated) || '';
   var activeHood = 'all';
   var nowGrid = document.getElementById('available-grid');
   var soonGrid = document.getElementById('soon-grid');
@@ -104,7 +120,7 @@
     var near = unit.near ? '<div class="near">' + esc(unit.near) + '</div>' : '';
     var acc = unit.acc ? '<span class="badge acc">Accessible</span>' : '';
     var whenClass = unit.when === 'now' ? 'now' : 'soon';
-    var whenText = unit.when === 'now' ? 'Available now' : 'Coming soon';
+    var whenText = unit.available || (unit.when === 'now' ? 'Available now' : 'Coming soon');
     return '<article class="card">'
       + '<div class="kicker"><span class="badge ' + whenClass + '">' + whenText + '</span>' + acc + '</div>'
       + '<div class="addr">' + esc(unit.addr) + unitLabel + '</div>'
@@ -144,4 +160,3 @@
 </script>
 </body>
 </html>
-
