@@ -8,23 +8,24 @@ GitHub turns it into the whole site and publishes it.
 
 ## How a change goes live
 
+The site is hosted on **Netlify**, which serves capratepropertymgmt.com.
+
 1. Edit `units.js` (or anything else) on a branch and open a pull request,
    or edit `units.js` right on GitHub and commit to `main`.
-2. GitHub builds the site and checks every page: broken links, missing
-   anchors, placeholder links, images without alt text, missing page
+2. Netlify and GitHub both build the site and run the checks: broken links,
+   missing anchors, placeholder links, images without alt text, missing page
    descriptions, and fair-housing wording such as "great for families" or
-   "perfect for". A problem stops the publish and shows a red X.
-3. On `main`, the checked site publishes to capratepropertymgmt.com within a
-   couple of minutes. Each run shows a summary on the **Actions** tab.
+   "perfect for". A problem stops the publish and shows a red X on the PR.
+3. On `main`, Netlify publishes the checked site to capratepropertymgmt.com
+   within a couple of minutes. On a PR, Netlify posts a preview link.
 
-To republish without a change: **Actions → Build, check, and publish →
-Run workflow**.
+The build settings live in `netlify.toml` in this repo, so nothing needs to be
+set in Netlify's dashboard. If a publish fails, Netlify's **Deploys** page shows
+the same check messages GitHub does.
 
-## One-time setup
-
-**Settings → Pages → Build and deployment → Source: GitHub Actions.**
-Until this is switched, GitHub keeps serving the old hand-made pages in the
-repo root. The custom domain and HTTPS settings carry over.
+GitHub Pages is not used. If it's still switched on under **Settings → Pages**,
+you can turn it off; it only publishes a duplicate copy at
+`tdrake51.github.io/capratepropertymgmt`.
 
 ## What gets built
 
@@ -59,7 +60,8 @@ Old links keep working: `/caprate_voucher_guide` and `/map.html` redirect.
 | `check-links.mjs` | The pre-publish checks |
 | `assets/site.css`, `assets/site.js` | Design and interactive features |
 | `photos/` | Unit photos, named `<unit-id>-<n>.jpg` |
-| `.github/workflows/build-and-deploy.yml` | Build, check, publish |
+| `netlify.toml` | Netlify build command, publish folder, redirects |
+| `.github/workflows/build-and-deploy.yml` | Same build and checks on GitHub, shown on PRs |
 
 ## Preview locally
 

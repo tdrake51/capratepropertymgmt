@@ -60,7 +60,7 @@ results never lead to a dead page.
 
 ## If the publish fails
 
-Open the **Actions** tab and click the red run. The checks say exactly what's
+Open the pull request's red X, the **Actions** tab, or Netlify's **Deploys** page. The checks say exactly what's
 wrong — for example, a missing comma in `units.js`, a broken link, or wording
 like "great for families". Fix it and commit again; the live site doesn't change
 until a run passes.
