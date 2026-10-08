@@ -43,7 +43,7 @@ jobs:
             echo "- Homes: $(ls dist/homes | wc -l)"
             echo "- List updated: $(grep -o 'updated:"[^"]*"' units.js | cut -d'"' -f2)"
           } >> "$GITHUB_STEP_SUMMARY"
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         with:
           path: dist
