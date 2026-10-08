@@ -1,0 +1,30 @@
+# capratepropertymgmt.com is served by Netlify. Netlify runs the same build
+# and checks as GitHub, then publishes dist/. A failed check means the live
+# site doesn't change.
+[build]
+  command = "node build.mjs && node check-links.mjs"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Old addresses from flyers and Facebook.
+[[redirects]]
+  from = "/caprate_voucher_guide"
+  to = "/voucher-guide.html"
+  status = 301
+
+[[redirects]]
+  from = "/map"
+  to = "/#homes"
+  status = 301
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/units.js"
+  [headers.values]
+    Cache-Control = "public, max-age=300"

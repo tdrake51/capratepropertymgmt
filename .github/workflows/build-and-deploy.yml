@@ -1,10 +1,7 @@
-name: Build, check, and publish capratepropertymgmt.com
+name: Build and check capratepropertymgmt.com
 
-# - Pull requests: build the site and check every link. Nothing is published.
-# - Push to main (a merged PR, or an edit to units.js): build, check, publish.
-# - "Run workflow" on the Actions tab: same as a push to main.
-#
-# Requires Settings → Pages → Source: "GitHub Actions" (one-time switch).
+# Runs the same build and checks Netlify runs, so problems show on the PR.
+# Netlify (not GitHub Pages) serves capratepropertymgmt.com — see netlify.toml.
 
 on:
   pull_request:
@@ -16,7 +13,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: pages
+  group: caprate-check-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -43,22 +40,3 @@ jobs:
             echo "- Homes: $(ls dist/homes | wc -l)"
             echo "- List updated: $(grep -o 'updated:"[^"]*"' units.js | cut -d'"' -f2)"
           } >> "$GITHUB_STEP_SUMMARY"
-      - uses: actions/upload-pages-artifact@v5
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-        with:
-          path: dist
-
-  deploy:
-    name: Publish to GitHub Pages
-    needs: build
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v5
