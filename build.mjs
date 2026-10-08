@@ -319,7 +319,7 @@ function unitPage(u, units, meta) {
   const c = crumbs([["Home", "/"], [u.hood, "/" + hoodSlug(u.hood)], [u.title, `/homes/${u.slug}.html`]]);
   const others = units.filter((x) => x.id !== u.id).sort((a, b) => (b.hood === u.hood) - (a.hood === u.hood)).slice(0, 3);
   const gallery = u.photos.length
-    ? `<div class="gallery" data-gallery>${u.photos.map((p, i) => `<button type="button" class="g-item${i === 0 ? " g-main" : ""}" data-index="${i}"><img src="/photos/${esc(p)}" alt="${esc(u.title)}, photo ${i + 1} of ${u.photos.length}" loading="${i < 3 ? "eager" : "lazy"}"></button>`).join("")}</div>`
+    ? `<div class="gallery" data-gallery>${u.photos.map((p, i) => `<button type="button" class="g-item${i === 0 ? " g-main" : ""}" data-index="${i}">${i === 0 ? `<span class="g-bg" style="background-image:url('/photos/${esc(p)}')" aria-hidden="true"></span>` : ""}<img src="/photos/${esc(p)}" alt="${esc(u.title)}, photo ${i + 1} of ${u.photos.length}" loading="${i < 3 ? "eager" : "lazy"}"></button>`).join("")}</div>`
     : `<div class="gallery gallery-empty">${photo(u, "g-ph")}</div>`;
   const addr = `${u.address}, Baltimore, MD ${u.zip}`;
   const schema = {
