@@ -1,0 +1,64 @@
+name: Build, check, and publish capratepropertymgmt.com
+
+# - Pull requests: build the site and check every link. Nothing is published.
+# - Push to main (a merged PR, or an edit to units.js): build, check, publish.
+# - "Run workflow" on the Actions tab: same as a push to main.
+#
+# Requires Settings → Pages → Source: "GitHub Actions" (one-time switch).
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build and check links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build the site from units.js
+        run: node build.mjs
+      - name: Check every link
+        run: node check-links.mjs
+      - name: Summary
+        run: |
+          {
+            echo "## capratepropertymgmt.com build"
+            echo
+            echo "- Pages: $(find dist -name '*.html' | wc -l)"
+            echo "- Homes: $(ls dist/homes | wc -l)"
+            echo "- List updated: $(grep -o 'updated:"[^"]*"' units.js | cut -d'"' -f2)"
+          } >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        with:
+          path: dist
+
+  deploy:
+    name: Publish to GitHub Pages
+    needs: build
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
