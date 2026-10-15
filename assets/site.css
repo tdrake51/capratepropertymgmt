@@ -1,7 +1,7 @@
 /* Caprate Property Management — site styles. Colors live in :root. */
 :root {
   --pine: #12463A; --pine-900: #0b2f27; --green: #1F6B4A; --green-soft: #E3F1EA;
-  --brass: #C4924B; --brass-700: #9c6f30; --brass-soft: #F6EBDA;
+  --brass: #C4924B; --brass-700: #865e27; --brass-soft: #F6EBDA;
   --paper: #FBFAF6; --white: #fff; --ink: #1d2a26; --muted: #5b6a64; --line: #e3e0d6;
   --radius: 14px; --radius-sm: 10px;
   --shadow: 0 1px 2px rgba(18,70,58,.06), 0 8px 24px rgba(18,70,58,.08);
@@ -87,8 +87,10 @@ svg { width: 1.1em; height: 1.1em; fill: currentColor; flex-shrink: 0; }
 .hero h1 em { font-style: normal; color: var(--brass); }
 .hero .lede { font-size: 19px; color: rgba(255,255,255,.85); max-width: 56ch; }
 .eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600; letter-spacing: .04em; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18); padding: 7px 14px; border-radius: 999px; margin-bottom: 22px; }
-.dot { width: 8px; height: 8px; border-radius: 50%; background: #6fe0a6; box-shadow: 0 0 0 4px rgba(111,224,166,.2); animation: pulse 2.4s infinite; }
-@keyframes pulse { 50% { box-shadow: 0 0 0 8px rgba(111,224,166,0); } }
+.dot { position: relative; width: 8px; height: 8px; border-radius: 50%; background: #6fe0a6; box-shadow: 0 0 0 4px rgba(111,224,166,.2); }
+.dot::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; background: rgba(111,224,166,.35); animation: pulse 2.4s infinite; will-change: transform, opacity; }
+@keyframes pulse { 0% { transform: scale(1); opacity: 1; } 70%, 100% { transform: scale(2); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .dot::after { animation: none; } }
 .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
 .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .hero-stats div { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); border-radius: var(--radius); padding: 18px 20px; }
@@ -306,3 +308,10 @@ svg { width: 1.1em; height: 1.1em; fill: currentColor; flex-shrink: 0; }
 /* Neighborhood page side lists */
 .bullet-list { margin: 8px 0 18px; padding-left: 20px; }
 .bullet-list li { margin: 4px 0; }
+
+/* Links inside footer text are underlined so they don't rely on color alone */
+.site-footer .legal a, .site-footer p a { text-decoration: underline; text-underline-offset: 2px; }
+/* <picture> wrappers behave like the images they replace */
+picture { display: contents; }
+
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }

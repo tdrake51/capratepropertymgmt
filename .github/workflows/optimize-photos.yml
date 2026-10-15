@@ -1,0 +1,38 @@
+name: Optimize new photos
+
+# When photos are added to photos/, make fast WebP copies in photos/web/ and
+# commit them. The site uses them automatically on the next publish.
+
+on:
+  push:
+    branches: [main]
+    paths: ["photos/**", "!photos/web/**", "optimize-photos.mjs"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: optimize-photos
+  cancel-in-progress: false
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - name: Make WebP copies
+        run: |
+          npm install --no-save --no-package-lock sharp
+          node optimize-photos.mjs
+      - name: Commit any new copies
+        run: |
+          git add photos/web
+          if git diff --cached --quiet; then echo "Nothing new."; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898900+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Optimize new photos"
+          git push

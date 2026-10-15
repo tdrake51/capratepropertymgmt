@@ -71,3 +71,11 @@ The copy states **what Caprate accepts**, never **who should apply**.
 Keep "We accept Housing Choice Vouchers", "Accepts HUD-VASH", "No extra fees
 for voucher holders". Avoid describing an ideal tenant, family size, or who a
 unit is "perfect for". The Equal Housing Opportunity mark stays in the footer.
+
+## Photos load fast automatically
+
+Add photos to `photos/` and list them in `units.js` as usual. GitHub then makes
+small WebP copies in `photos/web/` (the "Optimize new photos" action) and the
+site uses them on phones and in listing cards. Until the copies exist, the site
+simply shows the original photo, so nothing ever breaks. Don't edit or delete
+`photos/web/` by hand.

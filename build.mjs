@@ -85,7 +85,9 @@ ${noindex ? '<meta name="robots" content="noindex">\n' : ""}<link rel="canonical
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap"></noscript>
 <link rel="stylesheet" href="/assets/site.css">
 ${ld}
 </head>
@@ -105,11 +107,11 @@ function header(meta, current = "") {
   return `
 <header class="site-header">
   <div class="wrap bar">
-    <a class="brand" href="/" aria-label="Caprate Property Management home"><span class="brand-mark">${ICON.home}</span><span class="brand-name">Caprate<small>Property Management</small></span></a>
+    <a class="brand" href="/"><span class="brand-mark">${ICON.home}</span><span class="brand-name">Caprate<small>Property Management</small></span></a>
     <nav class="main-nav" aria-label="Main">${nav}</nav>
     <div class="bar-actions">
       <a class="shortlist-link" href="/shortlist.html" aria-label="Saved homes">${ICON.heart}<span class="shortlist-count" data-shortlist-count>0</span></a>
-      <a class="btn btn-brass btn-sm" href="tel:${meta.phoneRaw}">${ICON.phone}<span>${meta.phone}</span></a>
+      <a class="btn btn-brass btn-sm" href="tel:${meta.phoneRaw}" aria-label="Call ${meta.phone}">${ICON.phone}<span>${meta.phone}</span></a>
       <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </div>
@@ -136,7 +138,7 @@ function footer(meta) {
     <span class="eho"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3 2 14h4v15h20V14h4zm-6 13h12v3H10zm0 5h12v3H10z"/></svg>Equal Housing Opportunity</span>
   </div>
 </footer>
-<script src="/units.js"></script>
+<script src="/units.js" defer></script>
 <script src="/assets/site.js" defer></script>
 </body>
 </html>`;
@@ -174,9 +176,24 @@ const ORG = (meta) => ({
 });
 
 // ---------------------------------------------------------------- pieces --
+// Fast WebP versions made by optimize-photos.mjs (photos/web/). Falls back to
+// the original file when a photo hasn't been optimized yet.
+function webSet(file) {
+  const base = file.replace(/\.[^.]+$/, "");
+  const small = path.join(ROOT, "photos", "web", `${base}-640.webp`);
+  const large = path.join(ROOT, "photos", "web", `${base}-1280.webp`);
+  if (!fs.existsSync(small)) return "";
+  return fs.existsSync(large) ? `/photos/web/${base}-640.webp 640w, /photos/web/${base}-1280.webp 1280w` : `/photos/web/${base}-640.webp 640w`;
+}
+function picture(file, imgAttrs, sizes) {
+  const set = webSet(file);
+  const img = `<img src="/photos/${esc(file)}" ${imgAttrs}>`;
+  return set ? `<picture><source type="image/webp" srcset="${set}" sizes="${sizes}">${img}</picture>` : img;
+}
+
 function photo(u, cls = "") {
   if (u.photos.length) {
-    return `<img class="${cls}" src="/photos/${esc(u.photos[0])}" alt="${esc(u.title)} in ${esc(u.hood)}, Baltimore" loading="lazy">`;
+    return picture(u.photos[0], `class="${cls}" alt="${esc(u.title)} in ${esc(u.hood)}, Baltimore" loading="lazy" decoding="async" width="640" height="480"`, "(max-width: 700px) 100vw, 400px");
   }
   return `<div class="photo-ph ${cls}" role="img" aria-label="Photo coming soon for ${esc(u.title)}">${ICON.home}<span>${esc(u.hood)}</span><small>Photos coming soon</small></div>`;
 }
@@ -331,7 +348,7 @@ function unitPage(u, units, meta) {
   const c = crumbs([["Home", "/"], [u.hood, "/" + hoodSlug(u.hood)], [u.title, `/homes/${u.slug}.html`]]);
   const others = units.filter((x) => x.id !== u.id).sort((a, b) => (b.hood === u.hood) - (a.hood === u.hood)).slice(0, 3);
   const gallery = u.photos.length
-    ? `<div class="gallery" data-gallery>${u.photos.map((p, i) => `<button type="button" class="g-item${i === 0 ? " g-main" : ""}" data-index="${i}">${i === 0 ? `<span class="g-bg" style="background-image:url('/photos/${esc(p)}')" aria-hidden="true"></span>` : ""}<img src="/photos/${esc(p)}" alt="${esc(u.title)}, photo ${i + 1} of ${u.photos.length}" loading="${i < 3 ? "eager" : "lazy"}"></button>`).join("")}</div>`
+    ? `<div class="gallery" data-gallery>${u.photos.map((p, i) => `<button type="button" class="g-item${i === 0 ? " g-main" : ""}" data-index="${i}">${i === 0 ? `<span class="g-bg" style="background-image:url('${webSet(p) ? `/photos/web/${p.replace(/\.[^.]+$/, "")}-640.webp` : `/photos/${esc(p)}`}')" aria-hidden="true"></span>` : ""}${picture(p, `alt="${esc(u.title)}, photo ${i + 1} of ${u.photos.length}" loading="${i < 3 ? "eager" : "lazy"}" decoding="async"`, i === 0 ? "(max-width: 900px) 100vw, 800px" : "(max-width: 900px) 50vw, 320px")}</button>`).join("")}</div>`
     : `<div class="gallery gallery-empty">${photo(u, "g-ph")}</div>`;
   const addr = `${u.address}, Baltimore, MD ${u.zip}`;
   const schema = {
@@ -431,7 +448,7 @@ function hoodPage(n, units, meta) {
   </section>
   <section class="section section-tight">
     <div class="wrap">
-      ${here.length ? `<div class="home-grid">${here.map(card).join("")}</div>` : `<div class="callout"><h2>Get notified about ${n.name}</h2><p>Tell us your bedroom size and we'll let you know when a home opens up here.</p><a class="btn btn-brass" href="/#contact">Ask about ${n.name}</a> <a class="btn btn-outline" href="/#homes">See all available homes</a></div>`}
+      ${here.length ? `<h2 class="sr-only">Available homes in ${n.name}</h2><div class="home-grid">${here.map(card).join("")}</div>` : `<div class="callout"><h2>Get notified about ${n.name}</h2><p>Tell us your bedroom size and we'll let you know when a home opens up here.</p><a class="btn btn-brass" href="/#contact">Ask about ${n.name}</a> <a class="btn btn-outline" href="/#homes">See all available homes</a></div>`}
     </div>
   </section>
   ${n.about ? `<section class="section section-tight">
