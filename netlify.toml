@@ -28,3 +28,19 @@
   for = "/units.js"
   [headers.values]
     Cache-Control = "public, max-age=300"
+
+# Optimized photos (photos/web) and originals rarely change.
+[[headers]]
+  for = "/photos/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+# Security headers for every page (Lighthouse "Trust and safety").
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Cross-Origin-Opener-Policy = "same-origin"
