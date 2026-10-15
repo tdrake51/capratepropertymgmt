@@ -34,6 +34,7 @@ export const PAGES = [
   <li><strong>Inspection.</strong> The housing authority inspects the home for health and safety. We keep units inspection-ready and fix anything flagged right away.</li>
   <li><strong>Sign and move in.</strong> After the rent is approved and the home passes, we sign the lease and hand over keys.</li>
 </ol>
+<p>For more detail on each step, read <a href="/section-8-move-in-process-baltimore.html">From voucher to keys: the Section 8 move-in process</a>.</p>
 
 <h2>Your rights as a voucher holder in Maryland</h2>
 <p>Maryland's HOME Act, passed in 2020, added <strong>source of income</strong> to the state's fair housing protections, and Baltimore City law also prohibits source-of-income discrimination. In general, that means most landlords may not refuse an applicant because part of the rent is paid with a voucher, and may not hold voucher holders to a tougher screening standard than other applicants.</p>
@@ -152,6 +153,78 @@ export const PAGES = [
 ];
 
 // The voucher holder's guide, carried over from caprate_voucher_guide.html.
+// ---- Article: what happens after you find a home (draft for review) ----
+PAGES.push({
+  slug: "section-8-move-in-process-baltimore",
+  nav: "Section 8 move-in steps",
+  title: "Section 8 Move-In Steps in Baltimore City | Caprate",
+  h1: "From voucher to keys: the Section 8 move-in process in Baltimore City",
+  description: "What happens after you find a home with a Housing Choice Voucher in Baltimore City: the RFTA, rent review, inspection, lease and HAP contract, and move-in, step by step.",
+  kicker: "Step-by-step guide",
+  lede: "You found a home that fits your voucher. Here is what happens between \"I want this one\" and getting your keys, what you can do at each step, and what we handle on our side.",
+  body: `
+<p>Finding a home is only part of the process. After you choose a home, the housing authority still has to approve the rent, inspect the home, and sign a contract with the landlord before you can move in with your voucher. Knowing the order of these steps helps you avoid surprises and keep things moving.</p>
+<p>This guide follows the process used for Housing Choice Vouchers (Section 8) and HUD-VASH vouchers in Baltimore City. The Housing Authority of Baltimore City (HABC) runs the program in the city, and its rules and your caseworker have the final word on your voucher. If you're still looking for a home, start with our <a href="/voucher-guide.html">voucher holder's guide</a>.</p>
+
+<h2>Step 1: Apply for the home</h2>
+<p>Once you've toured a home and want it, you apply with the landlord like any other renter. At Caprate, every applicant is screened by the same standard, and there are no extra fees for paying with a voucher. Have your photo ID, voucher paperwork, and any proof of income ready so the application isn't held up.</p>
+
+<h2>Step 2: Submit the Request for Tenancy Approval (RFTA)</h2>
+<p>The RFTA is the form that asks the housing authority to approve the specific home. You and the landlord each fill out part of it: your information, and the landlord's information about the home, the rent, which utilities are included, and when it's available. It then goes to the housing authority.</p>
+<div class="callout"><p><strong>Your search clock pauses.</strong> Under HUD rules, the housing authority must pause, or "suspend," the time left on your voucher from the day the RFTA is submitted until it tells you its decision in writing. Keep a copy of the RFTA and note the date it was turned in.</p></div>
+<p>At Caprate, we complete and return our part of the RFTA promptly so your time isn't spent waiting on the landlord.</p>
+
+<h2>Step 3: The housing authority reviews the rent</h2>
+<p>Before approving the home, the housing authority checks two things:</p>
+<ul class="checks">
+  <li><strong>The rent is reasonable.</strong> It compares the rent with similar homes in the area.</li>
+  <li><strong>Your share is affordable.</strong> Your share is generally about 30% of your adjusted income. When a home's total rent and utilities are above your voucher's payment standard, HUD rules say your share when you first move in can't be more than 40% of your adjusted monthly income.</li>
+</ul>
+<p>If the rent doesn't work under these rules, the housing authority will tell you and the landlord. Sometimes the rent can be adjusted; other times you'll keep looking, with the time left on your voucher.</p>
+
+<h2>Step 4: The inspection</h2>
+<p>Every home rented with a voucher must pass a health-and-safety inspection before the housing authority can pay its share. The housing authority schedules it with the landlord. Our <a href="/voucher-guide.html#inspection">voucher guide</a> lists what inspectors check, from heat and hot water to smoke and carbon-monoxide detectors.</p>
+<p><strong>If something fails,</strong> it isn't the end of the process. The landlord is told what needs repair, makes the repairs, and the home is re-checked. Serious hazards must be fixed quickly. At Caprate, we schedule any flagged repairs right away and coordinate the re-inspection.</p>
+
+<h2>Step 5: Sign the lease and the HAP contract</h2>
+<p>Once the rent is approved and the home passes inspection, two documents are signed:</p>
+<ul class="checks">
+  <li><strong>Your lease</strong> with the landlord, which includes HUD's required tenancy addendum.</li>
+  <li><strong>The Housing Assistance Payments (HAP) contract</strong> between the housing authority and the landlord. This is the agreement that lets the housing authority pay its part of the rent directly to the landlord.</li>
+</ul>
+<p>Read your lease before you sign, and ask about anything that isn't clear: which utilities are yours, how repairs are requested, and the lease term. In Maryland, a security deposit generally can't be more than one month's rent for leases signed on or after October 1, 2024.</p>
+
+<h2>Step 6: Move in</h2>
+<p>With everything signed, you get your keys. Walk through the home with the landlord, note its condition in writing, and keep a copy along with photos. Each month, you pay your share of the rent to the landlord, and the housing authority pays the rest directly.</p>
+<p>After move-in, report income changes to the housing authority as required, since your share can be recalculated, and expect periodic inspections while you live there.</p>
+
+<h2>How long does it take?</h2>
+<p>It varies. The timeline depends on how quickly the RFTA is completed, the housing authority's review and inspection schedule, and whether any repairs are needed. Nobody can promise an exact date, but having your documents ready, returning paperwork quickly, and staying in touch with your caseworker all help.</p>
+
+<h2>Using a HUD-VASH voucher?</h2>
+<p>The steps are the same. Your VA case manager can help with the RFTA and stay in touch with the housing authority along the way. See <a href="/hud-vash-housing-baltimore.html">HUD-VASH housing in Baltimore City</a>.</p>
+
+<h2>What Caprate handles on our side</h2>
+<ul class="checks">
+  <li>We accept Housing Choice Vouchers and HUD-VASH on every home we list.</li>
+  <li>No extra fees for voucher holders, and the same screening standard for every applicant.</li>
+  <li>We complete our part of the RFTA promptly.</li>
+  <li>We coordinate the inspection and make any required repairs right away.</li>
+  <li>We work directly with caseworkers and placing agencies.</li>
+</ul>
+<p>Ready to look? See <a href="/#homes">homes available now</a>, or call us with questions.</p>
+<p class="note">This guide is general information, not legal advice. Housing authority procedures can change, and your voucher's terms are set by your housing authority. For questions about your own voucher, contact your caseworker or the Housing Authority of Baltimore City.</p>
+`,
+  faq: [
+    ["Does my voucher time stop after I submit the RFTA?", "Yes. HUD rules require the housing authority to pause, or suspend, the time left on your voucher from the day you submit the Request for Tenancy Approval until it gives you its decision in writing."],
+    ["What happens if the home fails inspection?", "The landlord is told what needs repair, makes the repairs, and the home is inspected again. The housing authority can't pay its share until the home passes."],
+    ["What if my share of the rent would be too high?", "When a home's rent and utilities are above your voucher's payment standard, your share at move-in can't be more than 40% of your adjusted monthly income. If it would be, the rent may be adjusted, or you can keep looking."],
+    ["How much can a security deposit be in Maryland?", "For leases signed on or after October 1, 2024, Maryland generally limits security deposits to one month's rent."],
+    ["Can I move in before the inspection passes?", "Generally, no. The housing authority can't start paying its share until the home passes inspection and the HAP contract is signed, so wait for approval before moving in."],
+  ],
+});
+
+
 export const GUIDE = {
   slug: "voucher-guide",
   title: "Voucher Holder's Guide to Renting in Baltimore | Caprate",
@@ -197,7 +270,7 @@ export const GUIDE = {
 <li>If your income drops, report it. Your share can be recalculated.</li>
 <li>The unit's total rent must be reasonable for the area, which the housing authority checks.</li></ul>`],
   ],
-  footnote: "This guide is general information. For the details of your voucher, your case manager or the Housing Authority of Baltimore City (HABC) has the final word.",
+  footnote: "Found a home? See <a href=\"/section-8-move-in-process-baltimore.html\">what happens next, from RFTA to keys</a>. This guide is general information. For the details of your voucher, your case manager or the Housing Authority of Baltimore City (HABC) has the final word.",
 };
 
 // Neighborhoods Caprate serves. A page is built for each, whether or not a
