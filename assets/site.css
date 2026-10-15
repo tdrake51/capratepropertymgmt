@@ -302,3 +302,7 @@ svg { width: 1.1em; height: 1.1em; fill: currentColor; flex-shrink: 0; }
 .legal { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; border-top: 1px solid rgba(255,255,255,.14); margin-top: 40px; padding-top: 20px; font-size: 13.5px; }
 .eho { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
 .eho svg { width: 22px; height: 22px; }
+
+/* Neighborhood page side lists */
+.bullet-list { margin: 8px 0 18px; padding-left: 20px; }
+.bullet-list li { margin: 4px 0; }

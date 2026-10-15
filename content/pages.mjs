@@ -12,7 +12,7 @@ export const PAGES = [
 {
   slug: "section-8-housing-baltimore",
   nav: "Section 8 / HCV",
-  title: "Section 8 & Housing Choice Voucher Rentals in Baltimore City | Caprate",
+  title: "Section 8 Rentals in Baltimore City | Caprate",
   h1: "Section 8 and Housing Choice Voucher rentals in Baltimore City",
   description: "Caprate accepts Housing Choice Vouchers (Section 8) on renovated Baltimore City rentals. No extra fees for voucher holders, prompt RFTA and inspection coordination.",
   kicker: "Housing Choice Vouchers",
@@ -53,7 +53,7 @@ export const PAGES = [
 {
   slug: "hud-vash-housing-baltimore",
   nav: "HUD-VASH",
-  title: "HUD-VASH Housing in Baltimore City — Landlord Accepting VASH Vouchers | Caprate",
+  title: "HUD-VASH Housing in Baltimore City | Caprate",
   h1: "HUD-VASH housing in Baltimore City",
   description: "Caprate accepts HUD-VASH vouchers on renovated Baltimore City rentals and works directly with VA case managers on referrals, RFTA paperwork and inspections.",
   kicker: "HUD-VASH",
@@ -91,7 +91,7 @@ export const PAGES = [
 {
   slug: "homeless-services-partners",
   nav: "For agencies",
-  title: "Housing Partner for Baltimore Homeless Services & Rapid Rehousing | Caprate",
+  title: "Rapid Rehousing Partner, Baltimore City | Caprate",
   h1: "A housing partner for Baltimore's homeless services agencies",
   description: "Caprate works with Baltimore City case managers in rapid rehousing, permanent supportive housing and Coordinated Access programs to place clients in renovated rentals.",
   kicker: "For case managers and placing agencies",
@@ -204,13 +204,85 @@ export const GUIDE = {
 // home is listed there this week, so search results never hit a dead page.
 // Describe by transit and landmarks only — never by who lives there.
 export const NEIGHBORHOODS = [
-  { name: "Garwyn Oaks", zip: "21216" },
-  { name: "Walbrook", zip: "21216" },
-  { name: "Panway-Braddish", zip: "21216" },
-  { name: "Forest Park", zip: "21215" },
-  { name: "Arlington", zip: "21215" },
-  { name: "Original Northwood", zip: "21218" },
-  { name: "Waverly", zip: "21218" },
-  { name: "Better Waverly", zip: "21218" },
-  { name: "Pen Lucy", zip: "21212" },
+  {
+    name: "Garwyn Oaks", zip: "21216", area: "Northwest Baltimore",
+    about: [
+      "Garwyn Oaks is a residential neighborhood in northwest Baltimore City, centered on Garrison Boulevard and the side streets around Allendale Road. Most homes are brick rowhomes and duplexes, many divided into apartments.",
+      "Mondawmin Mall and the Mondawmin Metro Subway station are a short ride away, and Liberty Heights Avenue and Garrison Boulevard carry frequent MTA bus service toward downtown and the northwest suburbs.",
+    ],
+    getAround: ["Mondawmin Metro Subway station", "MTA buses on Garrison Blvd and Liberty Heights Ave", "Quick access to Gwynns Falls Parkway"],
+    landmarks: ["Mondawmin Mall", "Gwynns Falls / Leakin Park", "Coppin State University"],
+  },
+  {
+    name: "Walbrook", zip: "21216", area: "West Baltimore",
+    about: [
+      "Walbrook sits in west Baltimore around Walbrook Junction, where North Avenue meets Windsor Mill Road and Garrison Boulevard. The neighborhood is made up mostly of brick rowhomes and small apartment buildings.",
+      "Coppin State University is close by on North Avenue, and the Mondawmin Metro Subway station and North Avenue bus lines connect Walbrook to downtown and the rest of the city.",
+    ],
+    getAround: ["MTA buses along North Avenue", "Mondawmin Metro Subway station", "Short drive to downtown via North Avenue"],
+    landmarks: ["Coppin State University", "Walbrook Junction shops", "Gwynns Falls Trail"],
+  },
+  {
+    name: "Panway-Braddish", zip: "21216", area: "West Baltimore",
+    about: [
+      "Panway-Braddish is a small west Baltimore neighborhood between Walbrook and Mondawmin, made up mostly of two-story brick rowhomes on short residential blocks.",
+      "Its location puts the Mondawmin Metro Subway station, Mondawmin Mall and Coppin State University all within a short ride, with bus service on North Avenue and nearby main roads.",
+    ],
+    getAround: ["Mondawmin Metro Subway station", "MTA buses on North Avenue", "Short drive to downtown via North Avenue"],
+    landmarks: ["Mondawmin Mall", "Coppin State University", "Druid Hill Park"],
+  },
+  {
+    name: "Forest Park", zip: "21215", area: "Northwest Baltimore",
+    about: [
+      "Forest Park is a northwest Baltimore neighborhood along Liberty Heights Avenue and Garrison Boulevard, known for older detached homes, porch-front houses and tree-lined streets alongside apartment conversions.",
+      "The Forest Park Golf Course, a city-run public course, is in the neighborhood, and Liberty Heights Avenue has bus service toward Mondawmin and downtown.",
+    ],
+    getAround: ["MTA buses on Liberty Heights Avenue and Garrison Blvd", "Mondawmin Metro Subway station", "Access to I-695 via Liberty Heights Avenue"],
+    landmarks: ["Forest Park Golf Course", "Liberty Heights Avenue shops", "Gwynns Falls / Leakin Park"],
+  },
+  {
+    name: "Arlington", zip: "21215", area: "Northwest Baltimore",
+    about: [
+      "Arlington is in northwest Baltimore near Reisterstown Road, with a mix of rowhomes, semi-detached houses and small apartment buildings.",
+      "The Rogers Avenue Metro Subway station is close by, giving a direct train to Mondawmin, State Center and downtown Baltimore, and Reisterstown Road has frequent bus service and shopping.",
+    ],
+    getAround: ["Rogers Avenue Metro Subway station", "MTA buses on Reisterstown Road", "Access to the Jones Falls Expressway and I-695"],
+    landmarks: ["Reisterstown Road shopping", "Pimlico Race Course", "Cylburn Arboretum"],
+  },
+  {
+    name: "Original Northwood", zip: "21218", area: "Northeast Baltimore",
+    about: [
+      "Original Northwood is a northeast Baltimore neighborhood next to Morgan State University, with brick colonials, duplexes and rowhome apartments on curving, tree-lined streets.",
+      "Hillen Road, Loch Raven Boulevard and The Alameda carry bus service across north Baltimore, and the shops along The Alameda and Northwood Commons are nearby.",
+    ],
+    getAround: ["MTA buses on Hillen Road, Loch Raven Blvd and The Alameda", "Short drive to downtown via Hillen Road", "Access to I-695 via Loch Raven Boulevard"],
+    landmarks: ["Morgan State University", "Lake Montebello", "Northwood Commons shopping"],
+  },
+  {
+    name: "Waverly", zip: "21218", area: "North-central Baltimore",
+    about: [
+      "Waverly is a north-central Baltimore neighborhood along Greenmount Avenue and East 33rd Street, with rowhomes, porch-front houses and small apartment buildings.",
+      "It is home to the year-round Saturday farmers market on East 32nd Street, and the Johns Hopkins Homewood campus is a short trip west. Greenmount Avenue has frequent bus service to downtown.",
+    ],
+    getAround: ["MTA buses on Greenmount Avenue and 33rd Street", "Short trip to Penn Station and downtown", "Charles Street bus lines a few blocks west"],
+    landmarks: ["32nd Street Farmers Market", "Johns Hopkins Homewood campus", "Stadium Place / YMCA"],
+  },
+  {
+    name: "Better Waverly", zip: "21218", area: "North-central Baltimore",
+    about: [
+      "Better Waverly lies just east of Greenmount Avenue around East 33rd Street, mostly rowhomes on compact residential blocks.",
+      "The former Memorial Stadium site, now Stadium Place with a YMCA, sits along its northern edge, and the Waverly farmers market, Greenmount Avenue shops and bus lines are within walking distance.",
+    ],
+    getAround: ["MTA buses on Greenmount Avenue and 33rd Street", "Short trip to Penn Station", "Access to the Jones Falls Expressway"],
+    landmarks: ["Stadium Place / YMCA", "32nd Street Farmers Market", "Lake Montebello"],
+  },
+  {
+    name: "Pen Lucy", zip: "21212", area: "North Baltimore",
+    about: [
+      "Pen Lucy is a north Baltimore neighborhood north of Waverly, between Greenmount Avenue and the York Road corridor, with rowhomes, porch-front houses and small apartment buildings.",
+      "Loyola University Maryland and the Johns Hopkins Homewood campus are nearby, and York Road and Greenmount Avenue carry frequent bus service north to Towson and south to downtown.",
+    ],
+    getAround: ["MTA buses on York Road and Greenmount Avenue", "Direct bus service to Towson and downtown", "Access to the Jones Falls Expressway"],
+    landmarks: ["Loyola University Maryland", "York Road shops", "Johns Hopkins Homewood campus"],
+  },
 ];
