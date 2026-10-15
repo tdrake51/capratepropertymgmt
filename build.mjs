@@ -55,6 +55,10 @@ const ICON = {
   phone: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>',
 };
 
+// Search engines show about 60 characters of a title. Try each option in order
+// and use the first that fits; the last one is used regardless.
+const fitTitle = (...options) => options.find((t) => t.length <= 60) ?? options[options.length - 1];
+
 function head({ title, description, url, schema = [], image, noindex = false }) {
   const canonical = SITE + url;
   if (!noindex) built.push(url);
@@ -153,12 +157,20 @@ function faqBlock(faq) {
   return { html, schema };
 }
 
+const ORG_ID = SITE + "/#business";
 const ORG = (meta) => ({
-  "@context": "https://schema.org", "@type": "RealEstateAgent", name: "Caprate Property Management",
-  url: SITE + "/", telephone: "+1" + meta.phoneRaw, email: meta.email,
-  areaServed: { "@type": "City", name: "Baltimore", containedInPlace: { "@type": "State", name: "Maryland" } },
+  "@context": "https://schema.org", "@type": "RealEstateAgent", "@id": ORG_ID, name: "Caprate Property Management",
+  url: SITE + "/", logo: SITE + "/favicon.svg", image: SITE + "/assets/share.png",
+  telephone: "+1" + meta.phoneRaw, email: meta.email,
+  areaServed: [
+    { "@type": "City", name: "Baltimore", containedInPlace: { "@type": "State", name: "Maryland" } },
+    ...NEIGHBORHOODS.map((n) => ({ "@type": "Place", name: `${n.name}, Baltimore, MD ${n.zip}` })),
+  ],
   address: { "@type": "PostalAddress", addressLocality: "Baltimore", addressRegion: "MD", addressCountry: "US" },
+  knowsAbout: ["Housing Choice Voucher Program", "Section 8 rentals", "HUD-VASH", "Rapid rehousing", "Baltimore City rental housing"],
   description: "Renovated rental homes in Baltimore City. Accepts Housing Choice Vouchers (Section 8) and HUD-VASH.",
+  // Add the Google Business Profile link here once it exists (meta.googleProfileUrl in units.js).
+  ...(meta.googleProfileUrl ? { sameAs: [meta.googleProfileUrl] } : {}),
 });
 
 // ---------------------------------------------------------------- pieces --
@@ -223,7 +235,7 @@ function homePage(units, meta) {
     itemListElement: units.map((u, i) => ({ "@type": "ListItem", position: i + 1, url: `${SITE}/homes/${u.slug}.html`, name: u.title })),
   };
   return head({
-    title: "Baltimore City Rentals That Accept Section 8 & HUD-VASH | Caprate Property Management",
+    title: "Section 8 & HUD-VASH Rentals in Baltimore City | Caprate",
     description: `${now} renovated Baltimore City rental homes available now. Caprate accepts Housing Choice Vouchers (Section 8) and HUD-VASH, with no extra fees for voucher holders.`,
     url: "/", schema: [ORG(meta), list],
   }) + header(meta, "/#homes") + `
@@ -330,9 +342,15 @@ function unitPage(u, units, meta) {
     ...(u.baths != null ? { numberOfBathroomsTotal: u.baths } : {}),
     amenityFeature: u.features.map((f) => ({ "@type": "LocationFeatureSpecification", name: f, value: true })),
     ...(u.photos.length ? { image: u.photos.map((p) => `${SITE}/photos/${p}`) } : {}),
+    containedInPlace: { "@type": "Place", name: `${u.hood}, Baltimore, MD`, url: `${SITE}/${hoodSlug(u.hood)}` },
+    provider: { "@id": ORG_ID },
   };
   return head({
-    title: `${u.title} — ${u.bedsLabel} rental in ${u.hood}, Baltimore ${u.zip} | Caprate`,
+    title: fitTitle(
+      `${u.title} — ${u.bedsLabel} for rent, Baltimore ${u.zip}`,
+      `${u.title} — ${u.bedsLabel}, Baltimore ${u.zip}`,
+      `${u.title}, Baltimore ${u.zip}`,
+    ),
     description: `${u.bedsLabel}${u.bathsLabel ? ", " + u.bathsLabel : ""} ${u.type ? u.type.toLowerCase() : "rental"} at ${u.title} in ${u.hood}, Baltimore ${u.zip}. ${u.available}. Accepts Section 8 and HUD-VASH.`,
     url: `/homes/${u.slug}.html`, schema: [schema, c.schema], image: u.photos[0],
   }) + header(meta) + `
@@ -383,22 +401,32 @@ function unitPage(u, units, meta) {
 
 function hoodPage(n, units, meta) {
   const here = units.filter((u) => u.hood === n.name);
-  const nearby = [...new Set(here.flatMap((u) => u.nearby))];
   const c = crumbs([["Home", "/"], ["Neighborhoods", "/#homes"], [n.name, "/" + hoodSlug(n.name)]]);
   const others = NEIGHBORHOODS.filter((x) => x.name !== n.name);
+  const url = "/" + hoodSlug(n.name);
+  const place = {
+    "@context": "https://schema.org", "@type": "Place", name: `${n.name}, Baltimore, MD`,
+    description: (n.about || [])[0] || `${n.name}, a neighborhood in Baltimore City.`,
+    address: { "@type": "PostalAddress", addressLocality: "Baltimore", addressRegion: "MD", postalCode: n.zip, addressCountry: "US" },
+    containedInPlace: { "@type": "City", name: "Baltimore" }, url: SITE + url,
+  };
+  const list = here.length ? [{
+    "@context": "https://schema.org", "@type": "ItemList", name: `Rental homes in ${n.name}, Baltimore`,
+    itemListElement: here.map((u, i) => ({ "@type": "ListItem", position: i + 1, url: `${SITE}/homes/${u.slug}.html`, name: u.title })),
+  }] : [];
+  const listItems = (arr) => arr.map((x) => `<li>${esc(x)}</li>`).join("");
   return head({
-    title: `${n.name} Rentals, Baltimore ${n.zip} — Section 8 & HUD-VASH Accepted | Caprate`,
-    description: `${here.length ? `${here.length} rental home${here.length > 1 ? "s" : ""} available` : "Rental homes"} in ${n.name}, Baltimore ${n.zip}. Caprate accepts Housing Choice Vouchers (Section 8) and HUD-VASH.`,
-    url: "/" + hoodSlug(n.name), schema: [c.schema],
+    title: fitTitle(`${n.name} Rentals, Baltimore ${n.zip} | Section 8 Accepted`, `${n.name} Rentals in Baltimore ${n.zip} | Caprate`, `${n.name} Rentals, Baltimore ${n.zip}`),
+    description: `${here.length ? `${here.length} rental home${here.length > 1 ? "s" : ""} available` : "Rental homes"} in ${n.name}, ${n.area || "Baltimore City"} (${n.zip}). Caprate accepts Housing Choice Vouchers (Section 8) and HUD-VASH, with no extra fees for voucher holders.`,
+    url, schema: [c.schema, place, ...list],
   }) + header(meta) + `
 <main id="main">
   <section class="page-head">
     <div class="wrap">
       ${c.html}
-      <p class="kicker">Baltimore City · ${n.zip}</p>
-      <h1>Rental homes in ${n.name}</h1>
+      <p class="kicker">${esc(n.area || "Baltimore City")} · ${n.zip}</p>
+      <h1>Rental homes in ${n.name}, Baltimore</h1>
       <p class="lede">${here.length ? `${here.length} home${here.length > 1 ? "s" : ""} listed in ${n.name} right now.` : `No ${n.name} homes are listed this week. New homes open up often — ask to get the weekly list.`} We accept Housing Choice Vouchers (Section 8) and HUD-VASH.</p>
-      ${nearby.length ? `<p class="hood-near">${ICON.pin}${esc(nearby.join(" · "))}</p>` : ""}
     </div>
   </section>
   <section class="section section-tight">
@@ -406,8 +434,27 @@ function hoodPage(n, units, meta) {
       ${here.length ? `<div class="home-grid">${here.map(card).join("")}</div>` : `<div class="callout"><h2>Get notified about ${n.name}</h2><p>Tell us your bedroom size and we'll let you know when a home opens up here.</p><a class="btn btn-brass" href="/#contact">Ask about ${n.name}</a> <a class="btn btn-outline" href="/#homes">See all available homes</a></div>`}
     </div>
   </section>
+  ${n.about ? `<section class="section section-tight">
+    <div class="wrap article-grid">
+      <article class="prose">
+        <h2>About ${n.name}</h2>
+        ${n.about.map((p) => `<p>${esc(p)}</p>`).join("")}
+        <h2>Renting in ${n.name} with a voucher</h2>
+        <p>Caprate accepts Housing Choice Vouchers (Section 8), including vouchers from the Housing Authority of Baltimore City, and HUD-VASH vouchers, with no extra fees for voucher holders. Every home is renovated, and we work directly with case managers and placing agencies. Read the <a href="/voucher-guide.html">voucher holder's guide</a>, or see how we work with <a href="/section-8-housing-baltimore.html">Section 8</a> and <a href="/hud-vash-housing-baltimore.html">HUD-VASH</a>.</p>
+      </article>
+      <aside class="article-side">
+        <div class="side-card">
+          <h2>Getting around</h2>
+          <ul class="bullet-list">${listItems(n.getAround || [])}</ul>
+          <h2>Nearby</h2>
+          <ul class="bullet-list">${listItems(n.landmarks || [])}</ul>
+          <a class="btn btn-brass btn-block" href="tel:${meta.phoneRaw}">Call ${meta.phone}</a>
+        </div>
+      </aside>
+    </div>
+  </section>` : ""}
   <section class="section section-tint">
-    <div class="wrap"><h2 class="h3">Other neighborhoods we serve</h2><div class="chip-row">${others.map((x) => `<a class="chip" href="/${hoodSlug(x.name)}">${x.name}</a>`).join("")}</div></div>
+    <div class="wrap"><h2 class="h3">Other Baltimore neighborhoods we serve</h2><div class="chip-row">${others.map((x) => `<a class="chip" href="/${hoodSlug(x.name)}">${x.name}</a>`).join("")}</div></div>
   </section>
 </main>` + footer(meta);
 }
@@ -469,7 +516,7 @@ function guidePage(units, meta) {
 
 function printablePage(units, meta) {
   const rows = units.map((u) => `<tr><td><a href="/homes/${u.slug}.html">${esc(u.title)}</a></td><td>${esc(u.hood)} ${esc(u.zip)}</td><td>${u.bedsLabel}${u.bathsLabel ? " / " + u.bathsLabel : ""}</td><td>${esc(u.type || "")}</td><td>${esc(u.available)}</td></tr>`).join("");
-  return head({ title: `Available Units — ${meta.updated} | Caprate Property Management`, description: `Printable list of Caprate's available Baltimore City rental homes, updated ${meta.updated}. Accepts Section 8 and HUD-VASH.`, url: "/available-units.html" })
+  return head({ title: `Available Rentals in Baltimore City, ${meta.updated} | Caprate`, description: `Printable list of Caprate's available Baltimore City rental homes, updated ${meta.updated}. Accepts Section 8 and HUD-VASH.`, url: "/available-units.html" })
   + header(meta) + `
 <main id="main">
   <section class="page-head"><div class="wrap">
