@@ -612,6 +612,24 @@ function main() {
 
   write("index.html", homePage(units, meta));
   for (const u of units) write(`homes/${u.slug}.html`, unitPage(u, units, meta));
+
+  // Homes that came off units.js: forward their old pages to the neighborhood
+  // page (Netlify _redirects, 301) instead of a "not found". The list of past
+  // homes is content/homes-archive.json, kept current by remember-homes.mjs.
+  {
+    const archivePath = path.join(ROOT, "content", "homes-archive.json");
+    const archive = fs.existsSync(archivePath) ? JSON.parse(fs.readFileSync(archivePath, "utf8")) : {};
+    const current = new Set(units.map((u) => u.slug));
+    const known = new Set(NEIGHBORHOODS.map((n) => n.name));
+    const lines = Object.entries(archive)
+      .filter(([slug]) => !current.has(slug))
+      .flatMap(([slug, hood]) => {
+        const to = known.has(hood) ? "/" + hoodSlug(hood) : "/#homes";
+        return [`/homes/${slug}.html ${to} 301`, `/homes/${slug} ${to} 301`];
+      });
+    fs.writeFileSync(path.join(DIST, "_redirects"), lines.join("\n") + (lines.length ? "\n" : ""));
+    console.log(`Forwarding ${lines.length / 2} past home page(s) to their neighborhood pages.`);
+  }
   for (const n of NEIGHBORHOODS) write(hoodSlug(n.name), hoodPage(n, units, meta));
   for (const p of PAGES) write(`${p.slug}.html`, contentPage(p, units, meta));
   write("voucher-guide.html", guidePage(units, meta));

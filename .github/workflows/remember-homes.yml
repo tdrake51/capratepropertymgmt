@@ -1,0 +1,36 @@
+name: Remember listed homes
+
+# When units.js changes, record every listed home in content/homes-archive.json
+# so its page can be forwarded to its neighborhood page after it's taken off
+# the list (instead of showing "not found").
+
+on:
+  push:
+    branches: [main]
+    paths: ["units.js"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: remember-homes
+  cancel-in-progress: false
+
+jobs:
+  remember:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - run: node remember-homes.mjs
+      - name: Commit if anything changed
+        run: |
+          git add content/homes-archive.json
+          if git diff --cached --quiet; then echo "Nothing new."; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898900+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Remember listed homes"
+          git push

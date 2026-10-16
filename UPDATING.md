@@ -79,3 +79,15 @@ small WebP copies in `photos/web/` (the "Optimize new photos" action) and the
 site uses them on phones and in listing cards. Until the copies exist, the site
 simply shows the original photo, so nothing ever breaks. Don't edit or delete
 `photos/web/` by hand.
+
+## Taking a home off the list
+
+Just delete its line from `units.js`. Its old page automatically forwards to
+its neighborhood page, so saved links and Google results keep working. GitHub
+records every listed home in `content/homes-archive.json` (the "Remember listed
+homes" action) — don't edit that file by hand.
+
+If you list a home in a **new neighborhood**, add the neighborhood to
+`NEIGHBORHOODS` in `content/pages.mjs` first (with its about, getting-around and
+nearby lines). The publish check stops if a home links to a neighborhood page
+that doesn't exist.

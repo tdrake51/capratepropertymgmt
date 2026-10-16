@@ -323,6 +323,15 @@ export const NEIGHBORHOODS = [
     landmarks: ["Reisterstown Road shopping", "Pimlico Race Course", "Cylburn Arboretum"],
   },
   {
+    name: "Dolfield", zip: "21215", area: "Northwest Baltimore",
+    about: [
+      "Dolfield is a northwest Baltimore neighborhood along Dolfield Avenue near West Cold Spring Lane, with rowhomes, duplexes and small apartment buildings.",
+      "The West Coldspring Metro Subway station is close by, with trains to Mondawmin and downtown, and Cold Spring Lane, Liberty Heights Avenue and Reisterstown Road carry bus service and shopping.",
+    ],
+    getAround: ["West Coldspring Metro Subway station", "MTA buses on W Cold Spring Ln and Liberty Heights Ave", "Access to the Jones Falls Expressway via Cold Spring Lane"],
+    landmarks: ["Sinai Hospital", "Hanlon Park / Lake Ashburton", "Mondawmin Mall"],
+  },
+  {
     name: "Original Northwood", zip: "21218", area: "Northeast Baltimore",
     about: [
       "Original Northwood is a northeast Baltimore neighborhood next to Morgan State University, with brick colonials, duplexes and rowhome apartments on curving, tree-lined streets.",
