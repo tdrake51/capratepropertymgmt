@@ -613,23 +613,6 @@ function main() {
   write("index.html", homePage(units, meta));
   for (const u of units) write(`homes/${u.slug}.html`, unitPage(u, units, meta));
 
-  // Homes that came off units.js: forward their old pages to the neighborhood
-  // page (Netlify _redirects, 301) instead of a "not found". The list of past
-  // homes is content/homes-archive.json, kept current by remember-homes.mjs.
-  {
-    const archivePath = path.join(ROOT, "content", "homes-archive.json");
-    const archive = fs.existsSync(archivePath) ? JSON.parse(fs.readFileSync(archivePath, "utf8")) : {};
-    const current = new Set(units.map((u) => u.slug));
-    const known = new Set(NEIGHBORHOODS.map((n) => n.name));
-    const lines = Object.entries(archive)
-      .filter(([slug]) => !current.has(slug))
-      .flatMap(([slug, hood]) => {
-        const to = known.has(hood) ? "/" + hoodSlug(hood) : "/#homes";
-        return [`/homes/${slug}.html ${to} 301`, `/homes/${slug} ${to} 301`];
-      });
-    fs.writeFileSync(path.join(DIST, "_redirects"), lines.join("\n") + (lines.length ? "\n" : ""));
-    console.log(`Forwarding ${lines.length / 2} past home page(s) to their neighborhood pages.`);
-  }
   for (const n of NEIGHBORHOODS) write(hoodSlug(n.name), hoodPage(n, units, meta));
   for (const p of PAGES) write(`${p.slug}.html`, contentPage(p, units, meta));
   write("voucher-guide.html", guidePage(units, meta));
@@ -650,6 +633,37 @@ function main() {
   write("robots.txt", `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);
   const today = new Date().toISOString().slice(0, 10);
   write("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[...new Set(built)].map((u) => `  <url><loc>${SITE}${u}</loc><lastmod>${today}</lastmod></url>`).join("\n")}\n</urlset>\n`);
+
+  // Homes that came off units.js: forward their old pages to the neighborhood
+  // page (Netlify _redirects, 301) instead of a "not found". The list of past
+  // homes is content/homes-archive.json, kept current by remember-homes.mjs.
+  {
+    const archivePath = path.join(ROOT, "content", "homes-archive.json");
+    const archive = fs.existsSync(archivePath) ? JSON.parse(fs.readFileSync(archivePath, "utf8")) : {};
+    const current = new Set(units.map((u) => u.slug));
+    const known = new Set(NEIGHBORHOODS.map((n) => n.name));
+    const lines = Object.entries(archive)
+      .filter(([slug]) => !current.has(slug))
+      .flatMap(([slug, hood]) => {
+        const to = known.has(hood) ? "/" + hoodSlug(hood) : "/#homes";
+        return [`/homes/${slug}.html ${to} 301`, `/homes/${slug} ${to} 301`];
+      });
+    // One address per page: Netlify also serves every page without ".html"
+    // (/voucher-guide as well as /voucher-guide.html), and Google was crawling
+    // both. Forward the short form to the .html address the canonical tags use.
+    const pages = [];
+    (function walk(dir) {
+      for (const f of fs.readdirSync(dir, { withFileTypes: true })) {
+        const full = path.join(dir, f.name);
+        if (f.isDirectory()) walk(full);
+        else if (f.name.endsWith(".html") && f.name !== "index.html" && f.name !== "404.html" && !["caprate_voucher_guide.html", "map.html"].includes(f.name)) pages.push("/" + path.relative(DIST, full).split(path.sep).join("/"));
+      }
+    })(DIST);
+    const shortForms = pages.map((p) => `${p.slice(0, -5)} ${p} 301!`);
+    const all = [...lines, ...shortForms];
+    fs.writeFileSync(path.join(DIST, "_redirects"), all.join("\n") + "\n");
+    console.log(`Forwarding ${lines.length / 2} past home page(s) to their neighborhood pages, and ${shortForms.length} short addresses to their .html pages.`);
+  }
 
   const pages = fs.readdirSync(DIST, { recursive: true }).filter((f) => f.endsWith(".html")).length;
   console.log(`Built ${pages} pages: ${units.length} homes, ${NEIGHBORHOODS.length} neighborhoods, ${PAGES.length + 1} guides.`);
