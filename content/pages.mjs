@@ -225,6 +225,57 @@ PAGES.push({
 });
 
 
+// ---- Article: neighborhood guide for voucher holders ----
+PAGES.push({
+  slug: "baltimore-neighborhoods-for-voucher-holders",
+  nav: "Neighborhood guide",
+  title: "Baltimore Neighborhoods for Voucher Holders | Caprate",
+  h1: "Where we rent: a Baltimore neighborhood guide for voucher holders",
+  description: "A plain-language look at the Baltimore City neighborhoods where Caprate rents to Housing Choice Voucher (Section 8) and HUD-VASH holders, with transit, landmarks, and what to expect.",
+  kicker: "Choosing a neighborhood",
+  lede: "Your voucher works anywhere in Baltimore City that accepts it, so the real question is where you want to live. Here is a look at the neighborhoods where we rent, and what each one is like day to day.",
+  body: `
+<p>When you are searching with a Housing Choice Voucher (Section 8) or a HUD-VASH voucher, it is easy to focus only on which homes will take the voucher. That matters, but so does the neighborhood: how you will get to work or appointments, what is within walking distance, and whether the home fits your bedroom size. We rent across several parts of Baltimore City, and each area has its own feel. This guide walks through them so you can search with a place in mind, not just a bedroom count.</p>
+
+<h2>Northwest Baltimore</h2>
+<p>Most of our homes sit in northwest Baltimore, a part of the city built largely of brick rowhomes and duplexes, many divided into comfortable apartments. It is well connected to the Metro Subway and frequent bus lines, which makes getting downtown straightforward without a car.</p>
+<ul class="checks">
+  <li><strong>Garwyn Oaks (21216).</strong> Centered on Garrison Boulevard and the streets around Allendale Road. A short ride from Mondawmin Mall and the Mondawmin Metro station, with frequent buses toward downtown. Most of our Garrison and Allendale homes are here. See <a href="/neighborhoods/garwyn-oaks.html">Garwyn Oaks rentals</a>.</li>
+  <li><strong>Dolfield (21215).</strong> Along Dolfield Avenue near West Cold Spring Lane, close to the West Coldspring Metro station and Sinai Hospital. A quiet residential pocket of rowhomes and small apartment buildings. See <a href="/neighborhoods/dolfield.html">Dolfield rentals</a>.</li>
+  <li><strong>Central Park Heights (21215).</strong> Around Park Heights Avenue, near Sinai Hospital and Pimlico Race Course, with bus service on Park Heights Avenue and Reisterstown Road. See <a href="/neighborhoods/central-park-heights.html">Central Park Heights rentals</a>.</li>
+  <li><strong>Forest Park and Arlington (21215).</strong> Older, tree-lined northwest neighborhoods near Liberty Heights Avenue and Reisterstown Road, with the Forest Park Golf Course and easy access to the Metro and I-695.</li>
+</ul>
+
+<h2>West Baltimore</h2>
+<p>To the west, the city opens into residential neighborhoods with good highway access, handy if your work or family takes you toward the Beltway.</p>
+<ul class="checks">
+  <li><strong>Wildwood (21229).</strong> Around Wildwood Parkway near Edmondson Avenue, a residential area of rowhomes and duplexes close to Edmondson Village shopping, with bus service on Edmondson Avenue and quick access to I-70 and the park-and-ride. See <a href="/neighborhoods/wildwood.html">Wildwood rentals</a>.</li>
+  <li><strong>Walbrook and Panway-Braddish (21216).</strong> West Baltimore neighborhoods near Walbrook Junction and Mondawmin, made up mostly of brick rowhomes, close to Coppin State University and North Avenue bus lines.</li>
+</ul>
+
+<h2>Northeast Baltimore</h2>
+<ul class="checks">
+  <li><strong>Better Waverly and Waverly (21218).</strong> Northeast neighborhoods near 33rd Street and the Waverly commercial strip, close to the MARC Penn Line and a straightforward ride to downtown and the universities. A good fit if you want a rowhome with its own front door.</li>
+  <li><strong>Original Northwood and Pen Lucy.</strong> Quieter residential areas nearby, close to Morgan State University and The Alameda.</li>
+</ul>
+
+<h2>How to choose</h2>
+<ol class="steps">
+  <li><strong>Start with your bedroom size.</strong> Your voucher is approved for a specific number of bedrooms, so filter our <a href="/#homes">available homes</a> by that first.</li>
+  <li><strong>Think about how you get around.</strong> If you rely on transit, the northwest neighborhoods near the Metro and the northeast ones near the MARC line are worth a close look.</li>
+  <li><strong>Picture daily life.</strong> Where do you need to be most weeks for work, school, appointments, or family? Pick an area that makes those trips short.</li>
+  <li><strong>Tour before you commit.</strong> Addresses on a list only tell you so much. Call or email and see the home and the block in person.</li>
+</ol>
+<p>Whatever you choose, we accept Housing Choice Vouchers (Section 8) and HUD-VASH on every home we list, with no extra fees for voucher holders, and we move quickly on the landlord side of the paperwork so your search time is not spent waiting on us. When you are ready, read the <a href="/voucher-guide.html">voucher holder's guide</a> or see <a href="/section-8-move-in-process-baltimore.html">what happens after you find a home</a>.</p>
+`,
+  faq: [
+    ["Can I use my voucher anywhere in Baltimore City?", "Your Housing Choice Voucher can be used at any home in the city that accepts it and passes the housing authority's inspection and rent review. Caprate accepts vouchers on every home we list, so the choice of neighborhood is yours."],
+    ["Which neighborhoods have the best transit?", "The northwest neighborhoods such as Garwyn Oaks, Dolfield, and Central Park Heights are close to the Metro Subway and frequent bus lines, and the northeast neighborhoods near Waverly are close to the MARC Penn Line. Both make getting downtown without a car straightforward."],
+    ["Do you have homes outside northwest Baltimore?", "Yes. We also rent in west Baltimore neighborhoods like Wildwood and northeast neighborhoods like Better Waverly. The mix changes week to week, so check the available homes list or ask us."],
+    ["Can you tell me which neighborhood is right for me?", "We can tell you what each area is like and what is available, but the right fit depends on your bedroom size, how you get around, and where you need to be. Call or email and we will talk it through."],
+  ],
+});
+
 export const GUIDE = {
   slug: "voucher-guide",
   title: "Voucher Holder's Guide to Renting in Baltimore | Caprate",
