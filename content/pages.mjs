@@ -323,6 +323,24 @@ export const NEIGHBORHOODS = [
     landmarks: ["Reisterstown Road shopping", "Pimlico Race Course", "Cylburn Arboretum"],
   },
   {
+    name: "Central Park Heights", zip: "21215", area: "Northwest Baltimore",
+    about: [
+      "Central Park Heights is a northwest Baltimore neighborhood around Park Heights Avenue and Wilern Avenue, made up mostly of brick rowhomes and duplexes, many divided into apartments.",
+      "Sinai Hospital and Pimlico Race Course are close by, and Park Heights Avenue and Reisterstown Road carry frequent MTA bus service toward Mondawmin and downtown.",
+    ],
+    getAround: ["MTA buses on Park Heights Avenue and Reisterstown Road", "Rogers Avenue Metro Subway station", "Access to the Jones Falls Expressway and I-695"],
+    landmarks: ["Pimlico Race Course", "Sinai Hospital", "Cylburn Arboretum"],
+  },
+  {
+    name: "Wildwood", zip: "21229", area: "West Baltimore",
+    about: [
+      "Wildwood is a west Baltimore neighborhood around Wildwood Parkway near Edmondson Avenue, made up mostly of brick rowhomes and duplexes on tree-lined residential streets.",
+      "Edmondson Village shopping is close by, and Edmondson Avenue carries MTA bus service toward downtown, with quick access to I-70 and the park-and-ride.",
+    ],
+    getAround: ["MTA buses on Edmondson Avenue", "I-70 park-and-ride", "Access to I-695 and the Baltimore Beltway"],
+    landmarks: ["Edmondson Village", "Gwynns Falls / Leakin Park", "Westside Shopping Center"],
+  },
+  {
     name: "Dolfield", zip: "21215", area: "Northwest Baltimore",
     about: [
       "Dolfield is a northwest Baltimore neighborhood along Dolfield Avenue near West Cold Spring Lane, with rowhomes, duplexes and small apartment buildings.",
