@@ -131,6 +131,7 @@ function footer(meta) {
     </div>
     <div><h2>Renting</h2><a href="/#homes">Available homes</a><a href="/available-units.html">Printable list</a><a href="/shortlist.html">Saved homes</a><a href="/voucher-guide.html">Voucher holder's guide</a></div>
     <div><h2>Programs</h2><a href="/section-8-housing-baltimore.html">Section 8 / HCV</a><a href="/hud-vash-housing-baltimore.html">HUD-VASH</a><a href="/homeless-services-partners.html">For placing agencies</a><a href="/homeless-services-partners.html#refer">Send a referral</a></div>
+    <div><h2>Guides</h2><a href="/baltimore-neighborhoods-for-voucher-holders.html">Neighborhood guide</a><a href="/voucher-guide.html">Voucher holder's guide</a><a href="/section-8-move-in-process-baltimore.html">Section 8 move-in steps</a></div>
     <div><h2>Neighborhoods</h2><div class="hood-links">${hoods}</div></div>
   </div>
   <div class="wrap legal">

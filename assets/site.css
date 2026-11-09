@@ -293,7 +293,7 @@ svg { width: 1.1em; height: 1.1em; fill: currentColor; flex-shrink: 0; }
 
 /* Footer */
 .site-footer { background: var(--pine-900); color: rgba(255,255,255,.78); padding: 56px 0 24px; margin-top: 0; }
-.footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.2fr; gap: 32px; }
+.footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr 1.2fr; gap: 32px; }
 @media (max-width: 860px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-grid > div:first-child { grid-column: 1 / -1; } }
 .site-footer h2 { font: 700 12.5px var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--brass); margin-bottom: 12px; }
 .site-footer a { color: rgba(255,255,255,.88); text-decoration: none; }
